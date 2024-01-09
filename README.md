@@ -6,4 +6,7 @@ This repository is created for build ROS mobile manipulator and for graduation p
 https://github.com/ROBOTIS-GIT/ld08_driver.git
 ### Astra Orbbec 3D
 https://shop.orbbec3d.com/Astra
+
+git clone https://github.com/orbbec/ros_astra_camera.git
+sudo apt install ros-noetic-rgbd-launch libuvc-dev
 ### Motor with encoder
