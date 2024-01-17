@@ -5,15 +5,18 @@
 
 CytronMD motor1(PWM_DIR, 9, 8); // PWM 1=Pin 4, DIR1=Pin3
 CytronMD motor2(PWM_DIR, 11, 10); // PWM 2=Pin 6, DIR2=Pin5
-int encoderL_A = 2;
-int encoderL_B = 3;
-int encoderR_A = 4;
-int encoderR_B = 5;
 
-unsigned long pulse_L = 0;
-unsigned long pulse_R = 0;
+int encoderR_A = 2;
+int encoderR_B = 4;
+int encoderL_A = 3;
+int encoderL_B = 5;
+
+volatile long pulse_L = 0;
+volatile long pulse_R = 0;
 
 #define total 40120  // total pulses
+// PC L = 40184 , VM = 41300,40133,40216
+// PC R = 40400 , VM = 40041,40142,40491
 
 int pulsesChanged = 0;
 #define motorSpeed 30                   //Change speed of the motor.
@@ -28,31 +31,33 @@ void setup() {
 
   Serial.println("Setup");
 
-  attachInterrupt(encoderL_A, PULSE_L_A_CHANGE, CHANGE);
-  attachInterrupt(encoderL_B, PULSE_L_B_CHANGE, CHANGE);
-  attachInterrupt(encoderR_A, PULSE_R_A_CHANGE, CHANGE);
-  attachInterrupt(encoderR_B, PULSE_R_B_CHANGE, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderL_A), PULSE_L_A_CHANGE, CHANGE);
+  //  attachInterrupt(digitalPinToInterrupt(encoderL_B), PULSE_L_B_CHANGE, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderR_A), PULSE_R_A_CHANGE, CHANGE);
+  //  attachInterrupt(digitalPinToInterrupt(encoderR_B), PULSE_R_B_CHANGE, CHANGE);
 }
 
 void loop() {
-  Serial.print(digitalRead(encoderL_A));
-  Serial.print(" ");
-  Serial.print(digitalRead(encoderL_B));
-  Serial.print(" ");
-  Serial.println(pulse_L);
+  //  Serial.print(digitalRead(encoderL_A));
+  //  Serial.print(" ");
+  //  Serial.print(digitalRead(encoderL_B));
+  //  Serial.print(" ");
+  //  Serial.println(pulse_L);
   //  motor1.setSpeed(motorSpeed);   // Motor 1 runs forward at 50% speed.
   //delay(3000);
-  //motor1.setSpeed(0);   // Motor 1 runs forward at 50% speed.
+  motor2.setSpeed(0);   // Motor 1 runs forward at 50% speed.
   //delay(1000);
   //motor1.setSpeed(-64);  // Motor 2 runs backward at 50% speed.
   //delay(3000);
 
   if (pulsesChanged != 0) {
     pulsesChanged = 0;
+    Serial.print("L ");
     Serial.print(pulse_L);
-    Serial.print(" ");
+    Serial.print("  R ");
     Serial.println(pulse_R);
   }
+  delay(1);
 
 }
 
