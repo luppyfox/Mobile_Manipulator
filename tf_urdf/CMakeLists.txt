@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(TF_URDF)
+project(tf_urdf)
 
 find_package(catkin REQUIRED)
 

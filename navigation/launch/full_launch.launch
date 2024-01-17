@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+
+    <include file="$(find tf_urdf)/launch/state_publisher.launch"/>
+
+
+    <include file="$(find navigation)/launch/rosserial_cmdvel.launch"/>
+
+
+    <include file="$(find navigation)/launch/odom.launch"/>
+
+
+    <include file="$(find navigation)/launch/ld08.launch"/>
+    
+
+</launch> 
