@@ -3,7 +3,7 @@
 <launch>
 
 
-    <include file="$(find tf_urdf)/launch/state_publisher.launch"/>
+    <include file="$(find tf_urdf2)/launch/state_publisher.launch"/>
 
 
     <include file="$(find navigation)/launch/rosserial_cmdvel.launch"/>
@@ -12,7 +12,13 @@
     <include file="$(find navigation)/launch/odom.launch"/>
 
 
-    <include file="$(find navigation)/launch/ld08.launch"/>
+    <include file="$(find navigation)/launch/laser_scan.launch"/>
+
+    <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find navigation)/full.rviz" />
     
 
 </launch> 
