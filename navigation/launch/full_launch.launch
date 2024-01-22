@@ -14,11 +14,11 @@
 
     <include file="$(find navigation)/launch/laser_scan.launch"/>
 
-    <node
+    <!--<node
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find navigation)/rviz/full.rviz" />
+    args="-d $(find navigation)/rviz/full.rviz" />-->
     
 
 </launch> 

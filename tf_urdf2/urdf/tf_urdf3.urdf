@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="tf_urdf2">
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="-1.23025786656509E-12 5.18846734977975E-12 7.17791849942659E-12" rpy="0 0 0" />
+  </joint>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-1.23025786656509E-12 5.18846734977975E-12 7.17791849942659E-12"
+        rpy="0 0 0" />
+      <mass
+        value="2.12847235416398" />
+      <inertia
+        ixx="0.00568558429631298"
+        ixy="1.5266709730259E-09"
+        ixz="-5.06469082751148E-08"
+        iyy="0.00660980095473277"
+        iyz="-5.49851563305515E-06"
+        izz="0.0118606210877818" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="base_laser_link">
+    <inertial>
+      <origin
+        xyz="0.00287209394668812 -0.000171439245075351 -4.24955752011125E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.368367374305662" />
+      <inertia
+        ixx="9.68293322754369E-05"
+        ixy="1.45421516435213E-05"
+        ixz="-1.17442257422505E-20"
+        iyy="0.000356470305894242"
+        iyz="-6.52735196393128E-21"
+        izz="0.000276008992523265" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/base_laser_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/base_laser_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_laser_joint"
+    type="fixed">
+    <origin
+      xyz="-0.000131363742770744 0.0960941115400787 0.0268121154387293"
+      rpy="1.5707963267949 0 1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_laser_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="laser_link">
+    <inertial>
+      <origin
+        xyz="6.27969898303604E-15 0.00994901655834555 5.59968738045313E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.0660277715680958" />
+      <inertia
+        ixx="1.96156877893573E-05"
+        ixy="2.30712697514792E-21"
+        ixz="3.3881317890172E-21"
+        iyy="3.48742138584865E-05"
+        iyz="2.55774068988361E-21"
+        izz="1.96156117763069E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/laser_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/laser_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="laser_joint"
+    type="continuous">
+    <origin
+      xyz="-0.01425 0.00499999999999998 0"
+      rpy="3.14159265358979 0.841141811649931 3.14159265358979" />
+    <parent
+      link="base_laser_link" />
+    <child
+      link="laser_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <!--<link
+    name="camera_link">
+    <inertial>
+      <origin
+        xyz="-3.59641705078968E-06 -8.99346677352003E-05 -0.0199626938778014"
+        rpy="0 0 0" />
+      <mass
+        value="0.182998721477312" />
+      <inertia
+        ixx="3.5992273823816E-05"
+        ixy="2.02108915234498E-09"
+        ixz="4.50592861470096E-08"
+        iyy="0.000405203076956735"
+        iyz="4.47034923597135E-08"
+        izz="0.000396282425929481" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="-0.000131363742774914 0.0638441115400772 0.0858121154387287"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.0150496497452622 -1.96331145785322E-12 2.77555756156289E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0895053073671552" />
+      <inertia
+        ixx="0.000104006422478187"
+        ixy="7.89419753183192E-16"
+        ixz="4.3658717399168E-20"
+        iyy="5.80082032825445E-05"
+        iyz="9.78351853198924E-16"
+        izz="5.80082032677947E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/left_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/left_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.154631363742771 0.0895941115400787 -0.11818788456127"
+      rpy="0.848490512040727 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel_link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="right_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.0150496497452583 -1.9614865287565E-12 -1.24206200879939E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.0895053073671553" />
+      <inertia
+        ixx="0.000104006422478187"
+        ixy="7.89524586002435E-16"
+        ixz="-4.26639638785426E-20"
+        iyy="5.80082032825446E-05"
+        iyz="9.78333218474084E-16"
+        izz="5.80082032677947E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/right_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/right_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.154368636257235 0.0895941115400792 -0.118187884561269"
+      rpy="0.537102295661347 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel_link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="arm_1_link">
+    <inertial>
+      <origin
+        xyz="-0.00304007438065856 0.0196164335046979 -0.00291517433010096"
+        rpy="0 0 0" />
+      <mass
+        value="0.102309676287535" />
+      <inertia
+        ixx="5.8527733760858E-05"
+        ixy="-1.83034149313203E-07"
+        ixz="-5.8553418327819E-07"
+        iyy="0.000109918724976135"
+        iyz="3.63049047085068E-07"
+        izz="5.95682017970688E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_1_joint"
+    type="revolute">
+    <origin
+      xyz="-0.000131363742783178 0.0108441115400749 0.163312115438725"
+      rpy="1.57079632679492 0 1.96777674022887" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm_1_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="arm_2_link">
+    <inertial>
+      <origin
+        xyz="-0.00136241892712764 0.076000000000004 0.00324974749159981"
+        rpy="0 0 0" />
+      <mass
+        value="0.0731866074343533" />
+      <inertia
+        ixx="4.80073815600739E-05"
+        ixy="-1.00851028100145E-08"
+        ixz="8.91994561566115E-06"
+        iyy="3.20760640864426E-05"
+        iyz="2.40557713637902E-08"
+        izz="3.04704178358831E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.000571784258836153 0.0325000000000035 0.000239713915631105"
+      rpy="0 0 0" />
+    <parent
+      link="arm_1_link" />
+    <child
+      link="arm_2_link" />
+    <axis
+      xyz="0.38663534779315 0 -0.922232675541736" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="arm_3_link">
+    <inertial>
+      <origin
+        xyz="-0.0025815323539943 0.0524015938949764 0.000939181123807713"
+        rpy="0 0 0" />
+      <mass
+        value="0.103604281318284" />
+      <inertia
+        ixx="3.85881019869448E-05"
+        ixy="-4.80398959246596E-07"
+        ixz="5.05895937622422E-06"
+        iyy="2.28862112756691E-05"
+        iyz="-1.44453368102442E-07"
+        izz="2.97794535051696E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_3_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_3_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_3_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.151999999999983 0"
+      rpy="0 0 0" />
+    <parent
+      link="arm_2_link" />
+    <child
+      link="arm_3_link" />
+    <axis
+      xyz="0.38663534779314 0 -0.922232675541741" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="arm_4_link">
+    <inertial>
+      <origin
+        xyz="-0.00101187421643466 0.0375011786552923 -0.00366708118075301"
+        rpy="0 0 0" />
+      <mass
+        value="0.0995665365644681" />
+      <inertia
+        ixx="2.11129356918354E-05"
+        ixy="-8.60509446438974E-08"
+        ixz="2.61664430380233E-06"
+        iyy="1.51148952678042E-05"
+        iyz="-3.60758613100859E-08"
+        izz="1.71059723390192E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_4_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_4_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_4_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.146400000000001 0"
+      rpy="0 0 0" />
+    <parent
+      link="arm_3_link" />
+    <child
+      link="arm_4_link" />
+    <axis
+      xyz="0.386635347793163 0 -0.922232675541731" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="arm_5_link">
+    <inertial>
+      <origin
+        xyz="-0.00868940066621744 0.0276881875406733 -0.0253003256747634"
+        rpy="0 0 0" />
+      <mass
+        value="0.0375612763588537" />
+      <inertia
+        ixx="6.51328883590984E-06"
+        ixy="4.82424647091232E-09"
+        ixz="1.70111532974576E-06"
+        iyy="6.4324842128533E-06"
+        iyz="-9.59387279797009E-09"
+        izz="2.95122651270559E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_5_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/arm_5_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_5_joint"
+    type="revolute">
+    <origin
+      xyz="0.000560909226379237 0.0911499999999666 0.00281042669881565"
+      rpy="-3.14159265358977 0 3.14159265358978" />
+    <parent
+      link="arm_4_link" />
+    <child
+      link="arm_5_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="gripper_1_link">
+    <inertial>
+      <origin
+        xyz="0.000163480467066018 -0.00403983489132131 0.00336463442592227"
+        rpy="0 0 0" />
+      <mass
+        value="0.00233893532260201" />
+      <inertia
+        ixx="2.44085104510111E-07"
+        ixy="-4.91339632397839E-09"
+        ixz="5.10119347440217E-24"
+        iyy="7.71995240696251E-08"
+        iyz="3.34454387034296E-22"
+        izz="3.1839756504268E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/gripper_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/gripper_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_1_joint"
+    type="revolute">
+    <origin
+      xyz="0.0068104 0.0295 -0.011783"
+      rpy="0.63968 -1.068 2.4376" />
+    <parent
+      link="arm_5_link" />
+    <child
+      link="gripper_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="100" />
+  </joint>
+  <link
+    name="caster_link">
+    <inertial>
+      <origin
+        xyz="0.0040842184642891 -1.66533453693773E-16 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.01152385226836" />
+      <inertia
+        ixx="2.43995864492354E-06"
+        ixy="-1.61796527815372E-21"
+        ixz="6.56161020907689E-22"
+        iyy="1.40033256895839E-06"
+        iyz="-1.19114008207636E-21"
+        izz="1.40033256895839E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/caster_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://tf_urdf2/meshes/caster_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="caster_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0047951 -0.14001 -0.13319"
+      rpy="3.1007 0 -0.034236" />
+    <parent
+      link="base_link" />
+    <child
+      link="caster_link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>-->
+</robot>
