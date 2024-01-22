@@ -2,6 +2,6 @@
 <launch>
   <node pkg="ld08_driver" type="ld08_driver" name="turtlebot3_lds" output="screen">
     <param name="port" value="/dev/ttyUSB1"/>
-    <param name="frame_id" value="laser_link"/>
+    <param name="frame_id" value="base_laser_link"/>
   </node>
 </launch>

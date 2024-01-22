@@ -18,7 +18,7 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find navigation)/full.rviz" />
+    args="-d $(find navigation)/rviz/full.rviz" />
     
 
 </launch> 
