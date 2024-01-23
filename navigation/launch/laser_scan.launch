@@ -9,7 +9,7 @@
 
 </launch>-->
 <launch>
-  <arg name="set_frame_id" default="laser_link"/>
+  <arg name="set_frame_id" default="base_scan"/>
   <!--<arg name="lds_model" default="$(env LDS_MODEL)" doc="LDS MODEL [LDS-01, LDS-02]"/>
 
   <group if = "$(eval lds_model == 'LDS-01')">
@@ -20,6 +20,7 @@
   </group>-->
   
   <node pkg="ld08_driver" type="ld08_driver" name="turtlebot3_lds" output="screen" args="LD08">
-      <param name="frame_id" value="$(arg set_frame_id)"/>
+    <param name="port" value="/dev/ttyUSB1"/>
+    <param name="frame_id" value="$(arg set_frame_id)"/>
   </node>
 </launch>
