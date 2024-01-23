@@ -22,5 +22,7 @@
   <node pkg="ld08_driver" type="ld08_driver" name="turtlebot3_lds" output="screen" args="LD08">
     <param name="port" value="/dev/ttyUSB1"/>
     <param name="frame_id" value="$(arg set_frame_id)"/>
+    <param name="angle_min" value="90" />
+    <param name="angle_max" value="270" />
   </node>
 </launch>
