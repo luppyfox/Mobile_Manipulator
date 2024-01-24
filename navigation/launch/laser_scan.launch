@@ -22,7 +22,14 @@
   <node pkg="ld08_driver" type="ld08_driver" name="turtlebot3_lds" output="screen" args="LD08">
     <param name="port" value="/dev/ttyUSB1"/>
     <param name="frame_id" value="$(arg set_frame_id)"/>
-    <param name="angle_min" value="90"/>
-    <param name="abgle_max" value="270"/>
+    <param name="angle_min" value="90" />
+    <param name="angle_max" value="270" />
   </node>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+      name="laser_filter">
+    <rosparam command="load" file="$(find navigation)/config/scan_filter_config.yaml" />
+    <remap from="scan" to="base_scan" />
+  </node>
+
 </launch>
