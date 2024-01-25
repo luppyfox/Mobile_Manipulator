@@ -12,3 +12,8 @@ scan_filter_chain:
     lower_threshold: 100
     upper_threshold: 10000
     disp_histogram: 0
+- name: angle
+  type: laser_filters/LaserScanAngularBoundsFilter
+  params:
+    lower_angle: -1.57
+    upper_angle: 1.57
