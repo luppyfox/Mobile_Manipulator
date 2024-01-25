@@ -1,7 +1,7 @@
 # Mobile_Manipulator
 This repository is created for build ROS mobile manipulator and for graduation project.
 
-# Start Guide
+# Starting Guide
 You have to install ROS noetic on Ubuntu 20.04 LTS and Create catkin_ws before use this repository.
 ## Step 1
 ### Setup environment
@@ -16,7 +16,7 @@ $ git clone http://github.com/luppyfox/Mobile_Manipulator
 $ roscd;cd ..;catkin_make;rospack profile
 
 ## Step 2
-###Install Sensor Package
+### Install Sensor Package
 $ cd catkin_ws/src/Mobile_Manipulator/sensor_pkg/
 
 ### Lidar LDS-02
