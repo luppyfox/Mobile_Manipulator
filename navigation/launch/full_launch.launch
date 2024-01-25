@@ -12,9 +12,9 @@
     <include file="$(find navigation)/launch/odom.launch"/>
 
 
-    <!--<include file="$(find navigation)/launch/laser_scan.launch"/>
+    <include file="$(find navigation)/launch/laser_scan.launch"/>
 
-    <node
+    <!--<node
     name="rviz"
     pkg="rviz"
     type="rviz"
