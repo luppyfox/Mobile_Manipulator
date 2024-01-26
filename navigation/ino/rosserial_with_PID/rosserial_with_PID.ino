@@ -51,8 +51,10 @@ volatile long pulse_R = 0;
 int pulsesChanged = 0;
 
 //pid parameter
-float kp = 10;
-float ki = 5;
+float kpL = 37;
+float kiL = 0;//10;
+float kpR = 10;
+float kiR = 0;//10;
 
 float e_L = 0;
 float e_R = 0;
@@ -165,8 +167,8 @@ void loop() {
   e_R = vt_R + vrFilt;
   eintegral_R = eintegral_R + e_R * deltaT_R;
 
-  float ul = kp * e_L + ki * eintegral_L;
-  float ur = kp * e_R + ki * eintegral_R;
+  float ul = kpL * e_L + kiL * eintegral_L;
+  float ur = kpR * e_R + kiR * eintegral_R;
 
   // Set the motor speed and direction
   int dir_L = 1;
@@ -186,11 +188,11 @@ void loop() {
     dir_R = -1;
   }
   int pwr_R = ((int) fabs(ur)) * dir_R;
-  if (pwr_R > 255) {
-    pwr_R = 255;
+  if (pwr_R > 200) {
+    pwr_R = 200;
   }
-  if (pwr_R < -255) {
-    pwr_R = -255;
+  if (pwr_R < -200) {
+    pwr_R = -200;
   }
   
   //  setMotor

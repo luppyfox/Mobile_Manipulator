@@ -31,8 +31,11 @@ float vrPrev = 0;
 float vt_R = 0;
 
 //pid parameter
-float kp = 10;
-float ki = 5;
+float kpL = 37;
+float kiL = 0;
+
+float kpR = 10;
+float kiR = 0;
 
 float e_L = 0;
 float e_R = 0;
@@ -104,12 +107,12 @@ void loop() {
   e_R = vt_R + vrFilt;
   eintegral_R = eintegral_R + e_R * deltaT_R;
 
-  float ul = kp * e_L + ki * eintegral_L ;
-  float ur = kp * e_R + ki * eintegral_R ;
-  Serial.print("vlFilt  ");
-  Serial.print(vlFilt);
-  Serial.print("  vrFilt  ");
-  Serial.print(vrFilt);
+  float ul = kpL * e_L + kiL * eintegral_L ;
+  float ur = kpR * e_R + kiR * eintegral_R ;
+  Serial.print("ul  ");
+  Serial.print(ul);
+  Serial.print("  ur  ");
+  Serial.print(ur);
   Serial.print("  u R ");
   Serial.print(e_L);
   Serial.print("  u R ");
