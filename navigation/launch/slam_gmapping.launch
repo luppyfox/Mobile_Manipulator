@@ -1,0 +1,18 @@
+*Launch File: my_gmapping_launch.launch**
+
+<launch>
+     <!--<arg name="scan_topic" default="/kobuki/laser/scan" />-->
+    
+   <!-- Defining parameters for slam_gmapping node -->
+
+     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping"
+     output="screen">
+        
+       <rosparam file="$(find navigation)/config/gmapping_params.yaml" command="load" />
+    
+       <!--<remap from="scan" to="$(arg scan_topic)"/>-->
+        
+     </node>
+    
+</launch>
+
