@@ -3,7 +3,7 @@
 <launch>
 
 
-    <include file="$(find tf_urdf4)/launch/state_publisher.launch"/>
+    <!--<include file="$(find tf_urdf4)/launch/state_publisher.launch"/>-->
 
 
     <include file="$(find navigation)/launch/rosserial_cmdvel.launch"/>
