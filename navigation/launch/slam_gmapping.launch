@@ -1,5 +1,3 @@
-*Launch File: my_gmapping_launch.launch**
-
 <launch>
      <!--<arg name="scan_topic" default="/kobuki/laser/scan" />-->
     
