@@ -4,6 +4,12 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="nav_tf_urdf">
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="-1.05560534986818E-12 5.17741757590009E-12 6.3189360698697E-12" rpy="0 0 0" />
+  </joint>
   <link
     name="base_link">
     <inertial>
