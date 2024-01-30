@@ -3,28 +3,28 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="nav_tf_urdf">
+  name="nav_tf_urdf2">
   <link name="base_footprint"/>
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
-    <origin xyz="-1.07955819150764E-12 3.98641248213828E-12 -8.16191932505118E-12" rpy="0 0 0" />
+    <origin xyz="8.16192517514196E-12 1.07956846779918E-12 3.98641313889376E-12" rpy="0 0 0" />
   </joint>
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="-1.07955819150764E-12 3.98641248213828E-12 -8.16191932505118E-12"
+        xyz="8.16192517514196E-12 1.07956846779918E-12 3.98641313889376E-12"
         rpy="0 0 0" />
       <mass
         value="2.4556334802297" />
       <inertia
-        ixx="0.00588389849656267"
-        ixy="-5.54498496431469E-09"
-        ixz="-1.53333170941911E-09"
-        iyy="0.010210248943553"
-        iyz="-6.09425077099926E-06"
-        izz="0.00582594596712262" />
+        ixx="0.00582594596712262"
+        ixy="-1.53333170944841E-09"
+        ixz="6.09425077099953E-06"
+        iyy="0.00588389849656267"
+        iyz="5.54498496348948E-09"
+        izz="0.010210248943553" />
     </inertial>
     <visual>
       <origin
@@ -32,7 +32,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/base_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -46,7 +46,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/base_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -54,25 +54,25 @@
     name="base_scan">
     <inertial>
       <origin
-        xyz="-1.73472347597681E-18 -0.00994901655834558 2.72645823032617E-07"
+        xyz="0 -2.72645823035773E-07 0.00994901655834558"
         rpy="0 0 0" />
       <mass
         value="0.0660277715680958" />
       <inertia
         ixx="1.96156877893574E-05"
-        ixy="-1.84238171772927E-21"
-        ixz="-2.88695483567953E-24"
-        iyy="3.48742138584865E-05"
-        iyz="-1.95349716327188E-21"
-        izz="1.96156117763069E-05" />
+        ixy="-2.88230053245097E-24"
+        ixz="-1.84238822538488E-21"
+        iyy="1.96156117763069E-05"
+        iyz="-6.79408546228102E-21"
+        izz="3.48742138584865E-05" />
     </inertial>
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="-1.5707963267949 0 0" />
+        rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/base_scan.STL" />
+          filename="package://nav_tf_urdf2/meshes/base_scan.STL" />
       </geometry>
       <material
         name="">
@@ -86,7 +86,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/base_scan.STL" />
+          filename="package://nav_tf_urdf2/meshes/base_scan.STL" />
       </geometry>
     </collision>
   </link>
@@ -94,14 +94,14 @@
     name="scan_joint"
     type="continuous">
     <origin
-      xyz="0 0.0120740335852946 0.0743670768316607"
-      rpy="0 0 -1.5707963267949" />
+      xyz="0.0120740335852946 0 0.0743670768316607"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
       link="base_scan" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 -1" />
     <limit
       lower="0"
       upper="0"
@@ -118,10 +118,10 @@
         value="0.0901982674382036" />
       <inertia
         ixx="0.000104914037889676"
-        ixy="7.89015853905989E-16"
-        ixz="1.05084195132732E-19"
+        ixy="7.89015809171247E-16"
+        ixz="1.05089063910995E-19"
         iyy="5.86007633745242E-05"
-        iyz="9.7832750100169E-16"
+        iyz="9.78327924518164E-16"
         izz="5.86007633597741E-05" />
     </inertial>
     <visual>
@@ -130,7 +130,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/left_wheel_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/left_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -144,7 +144,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/left_wheel_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/left_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -152,8 +152,8 @@
     name="left_wheel_joint"
     type="continuous">
     <origin
-      xyz="-0.154499727354178 0.0198240335852944 -0.0756329231683387"
-      rpy="0.037411098547317 0 0" />
+      xyz="0.0198240335852944 0.154499727354178 -0.0756329231683387"
+      rpy="0.037411098547317 0 -1.5707963267949" />
     <parent
       link="base_link" />
     <child
@@ -171,10 +171,10 @@
         value="0.0901982674382035" />
       <inertia
         ixx="0.000104914037889676"
-        ixy="7.88953684741619E-16"
-        ixz="2.6904953114311E-19"
+        ixy="7.8895368961215E-16"
+        ixz="2.69043914054597E-19"
         iyy="5.86007633745242E-05"
-        iyz="9.78323054078717E-16"
+        iyz="9.78318818913981E-16"
         izz="5.86007633597741E-05" />
     </inertial>
     <visual>
@@ -183,7 +183,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/right_wheel_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/right_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -197,7 +197,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/right_wheel_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/right_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -205,8 +205,8 @@
     name="right_wheel_joint"
     type="continuous">
     <origin
-      xyz="0.154500272645823 0.0198240335852952 -0.075632923168337"
-      rpy="-1.77866827099237 0 3.14159265358979" />
+      xyz="0.0198240335852952 -0.154500272645823 -0.0756329231683371"
+      rpy="-1.77866827099237 0 1.5707963267949" />
     <parent
       link="base_link" />
     <child
@@ -218,17 +218,17 @@
     name="caster_link">
     <inertial>
       <origin
-        xyz="0.00660393903079727 0 -4.16333634234434E-17"
+        xyz="0.00660393903079727 -2.77555756156289E-17 -1.38777878078145E-17"
         rpy="0 0 0" />
       <mass
         value="0.01152385226836" />
       <inertia
         ixx="2.43995864492354E-06"
-        ixy="-1.60142166590266E-21"
-        ixz="1.6448486480617E-21"
+        ixy="-1.58156933120139E-21"
+        ixz="1.66139226031276E-21"
         iyy="1.40033256895839E-06"
-        iyz="-9.72764400362361E-22"
-        izz="1.40033256895838E-06" />
+        iyz="-9.66146955461936E-22"
+        izz="1.40033256895839E-06" />
     </inertial>
     <visual>
       <origin
@@ -236,7 +236,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/caster_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/caster_link.STL" />
       </geometry>
       <material
         name="">
@@ -250,7 +250,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://nav_tf_urdf/meshes/caster_link.STL" />
+          filename="package://nav_tf_urdf2/meshes/caster_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -258,8 +258,8 @@
     name="caster_joint"
     type="continuous">
     <origin
-      xyz="-0.00718168989947332 -0.20968995832357 -0.0906329231683387"
-      rpy="-3.06614609532378 0 -0.0342357063287251" />
+      xyz="-0.20968995832357 0.00718168989947333 -0.0906329231683387"
+      rpy="-3.06614609532378 0 -1.60503203312362" />
     <parent
       link="base_link" />
     <child
