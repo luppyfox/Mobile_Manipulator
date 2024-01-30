@@ -31,11 +31,10 @@ float vrPrev = 0;
 float vt_R = 0;
 
 //pid parameter
-float kpL = 37;
-float kiL = 0;
-
-float kpR = 10;
-float kiR = 0;
+float kpL = 100;
+float kiL = 150;//10;
+float kpR = 100;
+float kiR = 150;//10;
 
 float e_L = 0;
 float e_R = 0;
@@ -99,8 +98,8 @@ void loop() {
   vlPrev = vl;
   vrFilt = 0.854 * vrFilt + 0.0728 * vr + 0.0728 * vrPrev;
   vrPrev = vr;
-  vt_L = -5;
-  vt_R = -5;
+  vt_L = 8;
+  vt_R = 8;
   // Compute the control signal u
   e_L = vt_L + vlFilt;
   eintegral_L = eintegral_L + e_L * deltaT_L;
@@ -110,12 +109,12 @@ void loop() {
   float ul = kpL * e_L + kiL * eintegral_L ;
   float ur = kpR * e_R + kiR * eintegral_R ;
   Serial.print("ul  ");
-  Serial.print(ul);
+  Serial.print(vlFilt);
   Serial.print("  ur  ");
-  Serial.print(ur);
-  Serial.print("  u R ");
+  Serial.print(vrFilt);bas
+  Serial.print("  e_L ");
   Serial.print(e_L);
-  Serial.print("  u R ");
+  Serial.print("  e_R ");
   Serial.println(e_R);
 
   // Set the motor speed and direction
@@ -157,6 +156,7 @@ void loop() {
   delay(1);
 
 }
+
 
 void PULSE_L_A_CHANGE() {
   if ( digitalRead(encoderL_B) == 0 ) {

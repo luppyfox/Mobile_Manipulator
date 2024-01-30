@@ -54,8 +54,8 @@ void setup() {
 }
 
 void loop() {
-  motor1.setSpeed(50);   // Motor 1 runs forward at 50% speed.
-  motor2.setSpeed(50);   // Motor 1 runs forward at 50% speed.
+  motor1.setSpeed(-52);   // Motor 1 runs forward at 50% speed.
+  motor2.setSpeed(-50);   // Motor 1 runs forward at 50% speed.
 
   if (pulsesChanged != 0) {
     pulsesChanged = 0;

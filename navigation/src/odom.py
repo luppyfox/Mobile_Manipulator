@@ -9,8 +9,8 @@ from tf.broadcaster import TransformBroadcaster
 
 class OdometryClass:
     def __init__(self):
-            self.enc_l_sub = rospy.Subscriber('/enc_L', Int64, self.callback_L)
-            self.enc_r_sub = rospy.Subscriber('/enc_R', Int64, self.callback_R)
+            self.enc_l_sub = rospy.Subscriber('/Enc_L', Int64, self.callback_L)
+            self.enc_r_sub = rospy.Subscriber('/Enc_R', Int64, self.callback_R)
             self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size = 1)
             self.odom = Odometry()
             self.rate = rospy.Rate(200)

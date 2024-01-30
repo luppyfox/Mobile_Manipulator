@@ -51,10 +51,10 @@ volatile long pulse_R = 0;
 int pulsesChanged = 0;
 
 //pid parameter
-float kpL = 37;
-float kiL = 0;//10;
-float kpR = 10;
-float kiR = 0;//10;
+float kpL = 100;
+float kiL = 150;//10;
+float kpR = 100;
+float kiR = 150;//10;
 
 float e_L = 0;
 float e_R = 0;
@@ -115,14 +115,10 @@ void loop() {
 
   if (pulsesChanged != 0) {
     pulsesChanged = 0;
-
     encL_msg.data = pulse_L;
     encR_msg.data = pulse_R;
-    //        encL_msg.data = pwr_R;
-    //    encR_msg.data = pwr_R;
     EncL.publish( &encL_msg );
     EncR.publish( &encR_msg );
-    //    Serial.println(pulse_R);
   }
 
   // read the position and velocity
@@ -188,11 +184,11 @@ void loop() {
     dir_R = -1;
   }
   int pwr_R = ((int) fabs(ur)) * dir_R;
-  if (pwr_R > 200) {
-    pwr_R = 200;
+  if (pwr_R > 195) {
+    pwr_R = 195;
   }
-  if (pwr_R < -200) {
-    pwr_R = -200;
+  if (pwr_R < -195) {
+    pwr_R = -195;
   }
   
   //  setMotor
@@ -238,60 +234,17 @@ void PULSE_L_A_CHANGE() {
   pulsesChanged = 1;
 }
 
-
-void PULSE_L_B_CHANGE() {
-  if ( digitalRead(encoderL_A) == 0 ) {
-    if ( digitalRead(encoderL_B) == 0 ) {
-      // B fell, A is low
-      pulse_L++; // moving forward
-    } else {
-      // B rose, A is low
-      pulse_L--; // moving reverse
-    }
-  } else {
-    if ( digitalRead(encoderL_B) == 0 ) {
-      // B fell, A is high
-      pulse_L--; // moving reverse
-    } else {
-      // B rose, A is high
-      pulse_L++; // moving forward
-    }
-  }
-  pulsesChanged = 1;
-}
-
 void PULSE_R_A_CHANGE() {
   if ( digitalRead(encoderR_B) == 0 ) {
     if ( digitalRead(encoderR_A) == 0 ) {
       // A fell, B is low
-      pulse_R--; // moving reverse
+      pulse_R++; // moving reverse
     } else {
       // A rose, B is low
-      pulse_R++; // moving forward
+      pulse_R--; // moving forward
     }
   } else {
     if ( digitalRead(encoderR_A) == 0 ) {
-      // B fell, A is high
-      pulse_R++; // moving reverse
-    } else {
-      // B rose, A is high
-      pulse_R--; // moving forward
-    }
-  }
-  pulsesChanged = 1;
-}
-
-void PULSE_R_B_CHANGE() {
-  if ( digitalRead(encoderR_A) == 0 ) {
-    if ( digitalRead(encoderR_B) == 0 ) {
-      // B fell, A is low
-      pulse_R++; // moving forward
-    } else {
-      // B rose, A is low
-      pulse_R--; // moving reverse
-    }
-  } else {
-    if ( digitalRead(encoderR_B) == 0 ) {
       // B fell, A is high
       pulse_R--; // moving reverse
     } else {
