@@ -69,7 +69,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="-1.5707963267949 0 0" />
       <geometry>
         <mesh
           filename="package://nav_tf_urdf/meshes/base_scan.STL" />
@@ -101,7 +101,7 @@
     <child
       link="base_scan" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 1 0" />
     <limit
       lower="0"
       upper="0"
