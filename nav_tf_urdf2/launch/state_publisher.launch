@@ -5,7 +5,7 @@
     name="model" />
   <param
     name="robot_description"
-    textfile="$(find tf_urdf2)/urdf/tf_urdf2.urdf" />
+    textfile="$(find nav_tf_urdf2)/urdf/nav_tf_urdf2.urdf" />
   <node
     name="joint_state_publisher_gui"
     pkg="joint_state_publisher_gui"
@@ -21,7 +21,7 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find tf_urdf2)/urdf.rviz" />-->
+    args="-d $(find nav_tf_urdf2)/urdf.rviz" />-->
 
   <!--<arg name="model" default="$(find nav_tf_urdf2)/urdf/nav_tf_urdf2.urdf"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
