@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-  <arg
+  <!--<arg
     name="model" />
   <param
     name="robot_description"
@@ -18,20 +18,20 @@
     name="robot_state_publisher"
     pkg="robot_state_publisher"
     type="robot_state_publisher" >
-  </node>
+  </node>-->
   <!--<node
     name="rviz"
     pkg="rviz"
     type="rviz"
     args="-d $(find nav_tf_urdf2)/urdf.rviz" />-->
 
-  <!--<arg name="model" default="$(find nav_tf_urdf2)/urdf/nav_tf_urdf2.urdf"/>
+  <arg name="model" default="$(find nav_tf_urdf2)/urdf/nav_tf_urdf2.urdf"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="FALSE"/>
   </node>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
      <param name="publish_frequency" type="double" value="100.0" />
      <param name="robot_description" command="cat $(arg model)" />
-  </node>-->
+  </node>
     
 </launch>

@@ -95,13 +95,13 @@
     type="continuous">
     <origin
       xyz="0.0120740335852946 0 0.0743670768316607"
-      rpy="0 0 0" />
+      rpy="3.1415926535898 3.1415926535898 0" />
     <parent
       link="base_link" />
     <child
       link="base_scan" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="0"
       upper="0"
