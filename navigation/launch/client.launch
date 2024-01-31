@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+
+    <!--<include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/>-->
+
+
+    <include file="$(find navigation)/launch/rosserial_cmdvel.launch"/>
+
+
+    <include file="$(find navigation)/launch/odom.launch"/>
+
+
+    <include file="$(find navigation)/launch/laser_scan.launch"/>
+
+    <!--<node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find navigation)/rviz/full.rviz" />-->
+    
+
+</launch> 
