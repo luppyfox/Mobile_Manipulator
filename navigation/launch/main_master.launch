@@ -6,9 +6,12 @@
 
   <!-- Map File -->
   <arg name="map_file" default="$(find navigation)/map/map4.yaml"/>
-  
+
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- Move_base -->
+  <include file="$(find navigation)/launch/move_base.launch"/>
 
 
 </launch>
