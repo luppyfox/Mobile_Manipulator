@@ -4,8 +4,11 @@
   <!-- URDF and TF -->
   <include file="$(find nav_tf_urdf2)/launch/display.launch"/>
 
+  <!-- Map File -->
+  <arg name="map_file" default="$(find navigation)/map/map4.yaml"/>
+  
   <!-- Map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find navigation)/map/map4.yaml"/>
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
 
 
 </launch>
