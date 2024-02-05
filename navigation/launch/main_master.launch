@@ -10,8 +10,10 @@
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
 
+  <!-- AMCL -->
+  <include file="$(find navigation)/launch/amcl.launch"/>
+
   <!-- Move_base -->
   <include file="$(find navigation)/launch/move_base.launch"/>
-
 
 </launch>
