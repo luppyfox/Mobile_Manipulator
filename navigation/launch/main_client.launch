@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!--<include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/>-->
+
+    <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node" output="screen">
+        <param name="port" value="/dev/ttyUSB0"/>
+        <param name="baud" value="57600"/>
+    </node>
+
+    <!--convert velocity-->
+    <node name="convert_vel_node" pkg="navigation" type="convert_vel.py" output="screen"/>
+
+    <!--Odom-->
+    <node name="odom_node" pkg="navigation" type="odom.py" output="screen"/>
+
+
+    <include file="$(find navigation)/launch/laser_scan.launch"/>
+
+    <!--<node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find navigation)/rviz/full.rviz" />-->
+    
+
+</launch> 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- URDF and TF -->
+  <include file="$(find nav_tf_urdf2)/launch/display.launch"/>
+
+  <!-- Map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find navigation)/map/map4.yaml"/>
+
+
+</launch>
