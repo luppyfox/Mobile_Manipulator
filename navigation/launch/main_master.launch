@@ -16,4 +16,11 @@
   <!-- Move_base -->
   <include file="$(find navigation)/launch/move_base.launch"/>
 
+  <!-- Rviz -->
+  <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find navigation)/rviz/full.rviz" />
+
 </launch>
