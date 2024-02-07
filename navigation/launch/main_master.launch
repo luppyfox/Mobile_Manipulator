@@ -2,7 +2,7 @@
 <launch>
 
   <!-- URDF and TF -->
-  <include file="$(find nav_tf_urdf2)/launch/display.launch"/>
+  <include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/>
 
   <!-- Map File -->
   <arg name="map_file" default="$(find navigation)/map/map4.yaml"/>

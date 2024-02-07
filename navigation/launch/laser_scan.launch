@@ -17,10 +17,9 @@
   <param name="angle_compensate"    type="bool"   value="true"/>
   </node>
   
-  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+  <!--<node pkg="laser_filters" type="scan_to_scan_filter_chain"
       name="laser_filter">
     <rosparam command="load" file="$(find navigation)/config/scan_filter_config.yaml" />
-    <!--<remap from="scan" to="base_scan" />-->
-  </node>
+  </node>-->
 
 </launch>
