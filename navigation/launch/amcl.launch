@@ -55,6 +55,6 @@
   </node>
 
   <!--Call service nomotion update of AMCL-->
-  <node name="odom_node" pkg="navigation" type="motion_update.py" output="screen"/>
+  <!-- <node name="odom_node" pkg="navigation" type="motion_update.py" output="screen"/> -->
 
 </launch>
