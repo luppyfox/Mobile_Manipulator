@@ -12,8 +12,8 @@ class OdometryClass:
             self.enc_l_sub = rospy.Subscriber('/Enc_L', Int64, self.callback_L)
             self.enc_r_sub = rospy.Subscriber('/Enc_R', Int64, self.callback_R)
             self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size = 1)
-            self.th_pub = rospy.Publisher('/th', Float32, queue_size = 1)
-            self.th2_pub = rospy.Publisher('/th2', Float32, queue_size = 1)
+            # self.th_pub = rospy.Publisher('/th', Float32, queue_size = 1) #For testing
+            # self.th2_pub = rospy.Publisher('/th2', Float32, queue_size = 1) #For testing
             self.odom = Odometry()
             self.rate = rospy.Rate(200)
             self.odom_broadcaster = TransformBroadcaster()
@@ -49,12 +49,12 @@ class OdometryClass:
             d_l = 2 * pi * self.R * (delta_l / self.N)
             d_r = 2 * pi * self.R * (delta_r / self.N)
 
-            dist_l = self.currentL_ticks * (2 * pi * self.R) / self.N
-            dist_r = self.currentR_ticks * (2 * pi * self.R) / self.N
-            avg_pulse = (dist_r - dist_l) / 2
-            degree = (avg_pulse / (self.L / 2))
-            # degree = atan(avg_pulse / (self.L / 2))
-            rad = (pi / 180 * degree)
+            # dist_l = self.currentL_ticks * (2 * pi * self.R) / self.N #For testing
+            # dist_r = self.currentR_ticks * (2 * pi * self.R) / self.N #For testing
+            # avg_pulse = (dist_r - dist_l) / 2 #For testing
+            # degree = (avg_pulse / (self.L / 2)) #For testing
+            # degree = atan(avg_pulse / (self.L / 2)) #For testing
+            # rad = (pi / 180 * degree) #For testing
             
             self.lastL_ticks = self.currentL_ticks
             self.lastR_ticks = self.currentR_ticks
@@ -62,9 +62,9 @@ class OdometryClass:
             self.current_time = rospy.Time.now()
             dt = (self.current_time - self.last_time).to_sec()
             
-            th3 = (d_r - d_l) / (self.L)
             th = (d_r) / (self.L / 2)
-            th2 = (d_l) / (self.L / 2)
+            # th2 = (d_l) / (self.L / 2) #For testing
+            # th3 = (d_r - d_l) / (self.L) #For testing
             dc = (d_r + d_l) / 2
             v = dc / dt
             w = th / dt
@@ -76,10 +76,10 @@ class OdometryClass:
             self.x += delta_x
             self.y += delta_y
             self.theta += delta_th
-            self.theta2 += th3
+            # self.theta2 += th3 #For testing
 
-            self.th_pub.publish(self.theta)
-            self.th2_pub.publish(self.theta2)
+            # self.th_pub.publish(self.theta) #For testing
+            # self.th2_pub.publish(self.theta2) #For testing
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, self.theta)
 
             self.odom_broadcaster.sendTransform((self.x, self.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
