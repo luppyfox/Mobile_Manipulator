@@ -62,9 +62,10 @@ class OdometryClass:
             self.current_time = rospy.Time.now()
             dt = (self.current_time - self.last_time).to_sec()
             
-            th = (d_r) / (self.L / 2)
+            th = (d_r - d_l) / (self.L)
+            # th3 = (d_r) / (self.L / 2)
             # th2 = (d_l) / (self.L / 2) #For testing
-            # th3 = (d_r - d_l) / (self.L) #For testing
+            
             dc = (d_r + d_l) / 2
             v = dc / dt
             w = th / dt
