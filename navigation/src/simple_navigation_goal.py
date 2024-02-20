@@ -13,7 +13,7 @@ def movebase_client():
    # Create an action client called "move_base" with action definition file "MoveBaseAction"
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
  
-   # Waits until the action server has started up and started listening for goals.
+   # Waits until the action server has started up and sta rted listening for goals.
     client.wait_for_server()
 
    # Creates a new goal with the MoveBaseGoal constructor
