@@ -9,3 +9,4 @@ global_costmap:
   static_map: true
   resolution: 0.05
  
+ 

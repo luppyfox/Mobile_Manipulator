@@ -48,13 +48,6 @@ class OdometryClass:
             delta_r = self.currentR_ticks - self.lastR_ticks
             d_l = 2 * pi * self.R * (delta_l / self.N)
             d_r = 2 * pi * self.R * (delta_r / self.N)
-
-            # dist_l = self.currentL_ticks * (2 * pi * self.R) / self.N #For testing
-            # dist_r = self.currentR_ticks * (2 * pi * self.R) / self.N #For testing
-            # avg_pulse = (dist_r - dist_l) / 2 #For testing
-            # degree = (avg_pulse / (self.L / 2)) #For testing
-            # degree = atan(avg_pulse / (self.L / 2)) #For testing
-            # rad = (pi / 180 * degree) #For testing
             
             self.lastL_ticks = self.currentL_ticks
             self.lastR_ticks = self.currentR_ticks
@@ -63,12 +56,10 @@ class OdometryClass:
             dt = (self.current_time - self.last_time).to_sec()
             
             th = (d_r - d_l) / (self.L)
-            # th3 = (d_r) / (self.L / 2)
-            # th2 = (d_l) / (self.L / 2) #For testing
             
             dc = (d_r + d_l) / 2
             v = dc / dt
-            w = th / dt
+            w = th / dt 
 
             delta_x = dc * cos(self.theta)
             delta_y = dc * sin(self.theta)
@@ -77,10 +68,7 @@ class OdometryClass:
             self.x += delta_x
             self.y += delta_y
             self.theta += delta_th
-            # self.theta2 += th3 #For testing
 
-            # self.th_pub.publish(self.theta) #For testing
-            # self.th2_pub.publish(self.theta2) #For testing
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, self.theta)
 
             self.odom_broadcaster.sendTransform((self.x, self.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
