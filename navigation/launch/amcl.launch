@@ -17,13 +17,13 @@
   <!-- AMCL -->
   <node pkg="amcl" type="amcl" name="amcl">
 
-    <param name="min_particles"             value="500"/> <!-- Key param -->
-    <param name="max_particles"             value="3000"/> <!-- Key param -->
-    <param name="kld_err"                   value="0.02"/>
-    <param name="update_min_d"              value="0.1"/> <!-- Key param unit meters -->
-    <param name="update_min_a"              value="0.5  "/> <!-- Key param unit radians -->
+    <param name="min_particles"             value="50"/> <!-- Key param -->
+    <param name="max_particles"             value="5000"/> <!-- Key param -->
+    <param name="kld_err"                   value="0.01"/>
+    <param name="update_min_d"              value="0.05"/> <!-- Key param unit meters -->
+    <param name="update_min_a"              value="0.07  "/> <!-- Key param unit radians -->
     <param name="resample_interval"         value="2"/> <!-- Key param unit -->
-    <param name="transform_tolerance"       value="0.5"/> <!-- Key param unit sec -->
+    <param name="transform_tolerance"       value="3"/> <!-- Key param unit sec -->
     <!-- <param name="recovery_alpha_slow"       value="0.00"/>
     <param name="recovery_alpha_fast"       value="0.00"/> -->
     <param name="initial_pose_x"            value="$(arg initial_pose_x)"/> <!-- Key param -->
@@ -51,6 +51,8 @@
     <param name="odom_alpha4"               value="0.1"/> <!-- Key param -->
     <param name="odom_frame_id"             value="odom"/> 
     <param name="base_frame_id"             value="base_footprint"/>
+    
+    <!-- <param name="global_frame_id"             value="map"/> -->
 
   </node>
 
