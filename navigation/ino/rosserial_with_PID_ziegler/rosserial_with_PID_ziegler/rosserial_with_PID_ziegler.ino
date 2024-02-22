@@ -18,8 +18,8 @@
 */
 
 //// Pins AT MEGA////////////
-CytronMD motor_l(PWM_DIR, 9, 8); // PWM 1=Pin 4, DIR1=Pin3
-CytronMD motor_r(PWM_DIR, 11, 10); // PWM 2=Pin 6, DIR2=Pin5
+CytronMD motor_l(PWM_DIR, 9, 8); // PWM 1=Pin 9, DIR1=Pin8
+CytronMD motor_r(PWM_DIR, 11, 10); // PWM 2=Pin 11, DIR2=Pin10
 
 int encoderR_A = 2;
 int encoderR_B = 4;
@@ -27,9 +27,8 @@ int encoderL_A = 3;
 int encoderL_B = 5;
 //////////////////////////////
 
-double total_pulse = 40120;  // total pulses
-// PC L = 40184 , VM = 41300,40133,40216
-// PC R = 40400 , VM = 40041,40142,40491
+#define total_pulse_L 20181  // total pulses Left wheel
+#define total_pulse_R 20225  // total pulses Left wheel
 
 // globals
 long prevT_L = 0;
@@ -52,8 +51,10 @@ volatile long pulse_R = 0;
 int pulsesChanged = 0;
 
 //pid parameter
-float kp = 35;
-float ki = 650;
+float kpL = 100;
+float kiL = 150;//10;
+float kpR = 100;
+float kiR = 150;//10;
 
 float e_L = 0;
 float e_R = 0;
@@ -67,16 +68,21 @@ ros::NodeHandle nh;
 std_msgs::Int64 encL_msg; // message encoder of left wheel
 std_msgs::Int64 encR_msg; // message encoder of right wheel
 
+std_msgs::Int64 vl_msg;
+std_msgs::Int64 vr_msg;
+ros::Publisher topicVL("topicV_L", &vl_msg);
+ros::Publisher topicVR("topicV_R", &vr_msg);
+
 //call publisher
 ros::Publisher EncL("Enc_L", &encL_msg); // Publish encoder of left wheel
 ros::Publisher EncR("Enc_R", &encR_msg); // Publish encoder of right wheel
 
 //callback
 void CallBack_L(const std_msgs::Float32& vel_l) {
-  vt_L = vel_l.data;
+  vt_L = vel_l.data * -1;
 }
 void CallBack_R(const std_msgs::Float32& vel_r) {
-  vt_R = vel_r.data;
+  vt_R = vel_r.data * -1;
 }
 
 //call subscriber
@@ -91,6 +97,8 @@ void setup() {
   nh.subscribe(Motor_R);
   nh.advertise(EncL);
   nh.advertise(EncR);
+  nh.advertise(topicVL);
+  nh.advertise(topicVR);
 
   attachInterrupt(digitalPinToInterrupt(encoderL_A), PULSE_L_A_CHANGE, CHANGE);
   //  attachInterrupt(digitalPinToInterrupt(encoderL_B), PULSE_L_B_CHANGE, CHANGE);
@@ -114,19 +122,15 @@ void loop() {
 
   if (pulsesChanged != 0) {
     pulsesChanged = 0;
-
     encL_msg.data = pulse_L;
-    //    encR_msg.data = pulse_R;
-    //        encL_msg.data = pwr_R;
-    //    encR_msg.data = pwr_R;
+    encR_msg.data = pulse_R;
     EncL.publish( &encL_msg );
-    //    EncR.publish( &encR_msg );
-    //    Serial.println(pulse_R);
+    EncR.publish( &encR_msg );
   }
 
   // read the position and velocity
-  int pos_L = 0;
-  int pos_R = 0;
+  long pos_L = 0;
+  long pos_R = 0;
   noInterrupts(); // disable interrupts temporarily while reading
   pos_L = pulse_L;
   pos_R = pulse_R;
@@ -141,34 +145,36 @@ void loop() {
 
   long currT_R = micros();
   float deltaT_R = ((float) (currT_R - prevT_R)) / 1.0e6;
-  encR_msg.data = pos_R;
-  EncR.publish( &encR_msg );
+
   float velocity_R = (pos_R - posPrev_R) / deltaT_R;
   posPrev_R = pos_R;
   prevT_R = currT_R;
 
   // Convert count/s to RPM
-  double vl = velocity_L / total_pulse * 60.0;
-  double vr = velocity_R / total_pulse * 60.0;
+  double vl = velocity_L / total_pulse_L * 60.0;
+  double vr = velocity_R / total_pulse_R * 60.0;
 
   // Low-pass filter (25 Hz cutoff)
   vlFilt = 0.854 * vlFilt + 0.0728 * vl + 0.0728 * vlPrev;
   vlPrev = vl;
   vrFilt = 0.854 * vrFilt + 0.0728 * vr + 0.0728 * vrPrev;
   vrPrev = vr;
-
+  
+  vl_msg.data = vlFilt;
+  vr_msg.data = vrFilt;
+  
   //  Set a target(Manual)
   //    float vt_L = 5*(cos(currT_L/1.0e6)>0);
   //    float vt_R = -5*(cos(currT_R/1.0e6)>0);
 
   // Compute the control signal u
-  e_L = vt_L - vlFilt;
+  e_L = vt_L + vlFilt;
   eintegral_L = eintegral_L + e_L * deltaT_L;
-  e_R = vt_R - vrFilt;
+  e_R = vt_R + vrFilt;
   eintegral_R = eintegral_R + e_R * deltaT_R;
 
-  float ul = kp * e_L + ki * eintegral_L;
-  float ur = kp * e_R + ki * eintegral_R;
+  float ul = kpL * e_L + kiL * eintegral_L;
+  float ur = kpR * e_R + kiR * eintegral_R;
 
   // Set the motor speed and direction
   int dir_L = 1;
@@ -188,19 +194,24 @@ void loop() {
     dir_R = -1;
   }
   int pwr_R = ((int) fabs(ur)) * dir_R;
-  if (pwr_R > 255) {
-    pwr_R = 255;
+  if (pwr_R > 195) {
+    pwr_R = 195;
   }
-  if (pwr_R < -255) {
-    pwr_R = -255;
+  if (pwr_R < -195) {
+    pwr_R = -195;
   }
-
-
+  
   //  setMotor
   if (vt_L == 0) motor_l.setSpeed(0);
-  else motor_l.setSpeed(pwr_L);
+  else{
+    motor_l.setSpeed(pwr_L);
+    topicVL.publish(&vl_msg);
+  }
   if (vt_R == 0) motor_r.setSpeed(0);
-  else motor_r.setSpeed(pwr_R);
+  else{
+    motor_r.setSpeed(pwr_R);
+    topicVR.publish(&vr_msg);
+  }
 
 
 
@@ -239,60 +250,17 @@ void PULSE_L_A_CHANGE() {
   pulsesChanged = 1;
 }
 
-
-void PULSE_L_B_CHANGE() {
-  if ( digitalRead(encoderL_A) == 0 ) {
-    if ( digitalRead(encoderL_B) == 0 ) {
-      // B fell, A is low
-      pulse_L++; // moving forward
-    } else {
-      // B rose, A is low
-      pulse_L--; // moving reverse
-    }
-  } else {
-    if ( digitalRead(encoderL_B) == 0 ) {
-      // B fell, A is high
-      pulse_L--; // moving reverse
-    } else {
-      // B rose, A is high
-      pulse_L++; // moving forward
-    }
-  }
-  pulsesChanged = 1;
-}
-
 void PULSE_R_A_CHANGE() {
   if ( digitalRead(encoderR_B) == 0 ) {
     if ( digitalRead(encoderR_A) == 0 ) {
       // A fell, B is low
-      pulse_R--; // moving reverse
+      pulse_R++; // moving reverse
     } else {
       // A rose, B is low
-      pulse_R++; // moving forward
+      pulse_R--; // moving forward
     }
   } else {
     if ( digitalRead(encoderR_A) == 0 ) {
-      // B fell, A is high
-      pulse_R++; // moving reverse
-    } else {
-      // B rose, A is high
-      pulse_R--; // moving forward
-    }
-  }
-  pulsesChanged = 1;
-}
-
-void PULSE_R_B_CHANGE() {
-  if ( digitalRead(encoderR_A) == 0 ) {
-    if ( digitalRead(encoderR_B) == 0 ) {
-      // B fell, A is low
-      pulse_R++; // moving forward
-    } else {
-      // B rose, A is low
-      pulse_R--; // moving reverse
-    }
-  } else {
-    if ( digitalRead(encoderR_B) == 0 ) {
       // B fell, A is high
       pulse_R--; // moving reverse
     } else {
