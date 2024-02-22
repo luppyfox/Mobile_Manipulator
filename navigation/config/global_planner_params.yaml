@@ -1,3 +1,4 @@
+# BaseGlobalPlanner:
 GlobalPlanner:                              # Also see: http://wiki.ros.org/global_planner
   use_grid_path: true
   use_dijkstra: False
