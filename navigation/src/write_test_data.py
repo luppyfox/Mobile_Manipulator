@@ -7,8 +7,8 @@ import pyFileInteraction as pfi
 
 class Data_Test():
     def __init__(self):
-        self.vl_sub = rospy.Subscriber('/topicV_L', Int64, self.callback_L)
-        self.vr_sub = rospy.Subscriber('/topicV_R', Int64, self.callback_R)
+        self.vl_sub = rospy.Subscriber('/topicV_L', Float32, self.callback_L)
+        self.vr_sub = rospy.Subscriber('/topicV_R', Float32, self.callback_R)
         self.right_wheel_pub = rospy.Publisher(
             '/control_right_wheel/command', Float32, queue_size=1)
         self.left_wheel_pub = rospy.Publisher(
@@ -35,31 +35,14 @@ class Data_Test():
         while not rospy.is_shutdown():
             self.left_wheel_pub.publish(self.rpmL)
             self.right_wheel_pub.publish(self.rpmR)
+
             self.data_time.append((rospy.Time.now() - self.start_time).to_sec())
             self.data_vl.append(self.vl)
             self.data_vr.append(self.vr)
-
             self.data_all.append([(rospy.Time.now() - self.start_time).to_sec(), self.vl, self.vr])
-            
-            # set
-            # plt.plot(,self.rpmL)
 
-            # # vl
-            # plt.plot(,self.vl, color="red")
-        
-            # # vr
-            # plt.plot(, self.vr, color='green')
-        
-            # # title
-            # plt.title('PID test')
-
-            # # towards right
-            # plt.xticks(rotation=30, ha='right')
-        
-            # # Giving x and y label to the graph
-            # plt.xlabel('Time')
-            # plt.ylabel('RPM')
             self.rate.sleep()
+
         # self.left_wheel_pub.publish(0)
         # self.right_wheel_pub.publish(0)
         plt.plot(self.data_time, self.data_vl, self.data_time, self.data_vr)

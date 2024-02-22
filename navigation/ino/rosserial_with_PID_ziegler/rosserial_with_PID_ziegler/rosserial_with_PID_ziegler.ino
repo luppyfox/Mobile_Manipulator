@@ -68,8 +68,8 @@ ros::NodeHandle nh;
 std_msgs::Int64 encL_msg; // message encoder of left wheel
 std_msgs::Int64 encR_msg; // message encoder of right wheel
 
-std_msgs::Int64 vl_msg;
-std_msgs::Int64 vr_msg;
+std_msgs::Float32 vl_msg;
+std_msgs::Float32 vr_msg;
 ros::Publisher topicVL("topicV_L", &vl_msg);
 ros::Publisher topicVR("topicV_R", &vr_msg);
 
