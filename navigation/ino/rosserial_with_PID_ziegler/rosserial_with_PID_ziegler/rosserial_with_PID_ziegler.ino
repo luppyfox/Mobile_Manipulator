@@ -51,15 +51,18 @@ volatile long pulse_R = 0;
 int pulsesChanged = 0;
 
 //pid parameter
-float kpL = 157.08; //100
-float kiL = 150;//10;
+float kpL = 70.686; //100 //70.686
+float kiL = 848.232;//150 //848.232
+float kdL = 0;
 float kpR = 140.1; //100
 float kiR = 150;//10;
 
 float e_L = 0;
+float eprev_L = 0;
 float e_R = 0;
 float eintegral_L = 0;
 float eintegral_R = 0;
+float diff_L = 0;
 
 //create ros node
 ros::NodeHandle nh;
@@ -172,9 +175,10 @@ void loop() {
   eintegral_L = eintegral_L + e_L * deltaT_L;
   e_R = vt_R + vrFilt;
   eintegral_R = eintegral_R + e_R * deltaT_R;
+  diff_L = (e_L - eprev_L) / deltaT_L;
 
-  float ul = kpL * e_L + kiL * eintegral_L*0;
-  float ur = kpR * e_R + kiR * eintegral_R*0;
+  float ul = kpL * e_L + kiL * eintegral_L + kdL*diff_L;
+  float ur = kpR * e_R + kiR * eintegral_R;
 
   // Set the motor speed and direction
   int dir_L = 1;
@@ -211,6 +215,7 @@ void loop() {
   else{
     motor_r.setSpeed(pwr_R);
     topicVR.publish(&vr_msg);
+    eprev_L = e_L;
   }
 
 
