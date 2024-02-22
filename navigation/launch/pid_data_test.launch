@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node" output="screen">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="baud" value="57600"/>
+  </node>
+  <node name="convert_vel_node" pkg="navigation" type="write_test_data.py" output="screen"/>
+</launch>
