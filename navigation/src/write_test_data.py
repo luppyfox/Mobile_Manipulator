@@ -22,7 +22,7 @@ class Data_Test():
         self.data_vl = []
         self.data_vr = []
         self.data_all = []
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(50)
         
 
     def callback_L(self, msg):
@@ -34,7 +34,7 @@ class Data_Test():
     def ploting(self):
         while not rospy.is_shutdown():
             self.left_wheel_pub.publish(self.rpmL)
-            self.right_wheel_pub.publish(self.rpmR)
+            # self.right_wheel_pub.publish(self.rpmR)
 
             self.data_time.append((rospy.Time.now() - self.start_time).to_sec())
             self.data_vl.append(self.vl)
