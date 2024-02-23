@@ -54,7 +54,7 @@ int pulsesChanged = 0;
 float kpL = 70.686; //100 //70.686
 float kiL = 848.232;//150 //848.232
 float kdL = 0;
-float kpR = 140.1; //100
+float kpR = 163.1; //100
 float kiR = 0;//150
 float kdR = 0;
 

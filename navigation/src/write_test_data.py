@@ -33,8 +33,8 @@ class Data_Test():
 
     def ploting(self):
         while not rospy.is_shutdown():
-            self.left_wheel_pub.publish(self.rpmL)
-            # self.right_wheel_pub.publish(self.rpmR)
+            # self.left_wheel_pub.publish(self.rpmL)
+            self.right_wheel_pub.publish(self.rpmR)
 
             self.data_time.append((rospy.Time.now() - self.start_time).to_sec())
             self.data_vl.append(self.vl)
