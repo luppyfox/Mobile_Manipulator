@@ -76,8 +76,8 @@ std_msgs::Int64 encR_msg; // message encoder of right wheel
 
 std_msgs::Float32 vl_msg;
 std_msgs::Float32 vr_msg;
-ros::Publisher topicVL("topicV_L", &vl_msg);
-ros::Publisher topicVR("topicV_R", &vr_msg);
+// ros::Publisher topicVL("topicV_L", &vl_msg); //For publish value testing
+// ros::Publisher topicVR("topicV_R", &vr_msg); //For publish value testing
 
 //call publisher
 ros::Publisher EncL("Enc_L", &encL_msg); // Publish encoder of left wheel
@@ -103,8 +103,8 @@ void setup() {
   nh.subscribe(Motor_R);
   nh.advertise(EncL);
   nh.advertise(EncR);
-  nh.advertise(topicVL);
-  nh.advertise(topicVR);
+  // nh.advertise(topicVL); //For publish value testing
+  // nh.advertise(topicVR); //For publish value testing
 
   attachInterrupt(digitalPinToInterrupt(encoderL_A), PULSE_L_A_CHANGE, CHANGE);
   //  attachInterrupt(digitalPinToInterrupt(encoderL_B), PULSE_L_B_CHANGE, CHANGE);
@@ -166,8 +166,8 @@ void loop() {
   vrFilt = 0.854 * vrFilt + 0.0728 * vr + 0.0728 * vrPrev;
   vrPrev = vr;
   
-  vl_msg.data = vlFilt;
-  vr_msg.data = vrFilt;
+  // vl_msg.data = vlFilt; //For publish value testing
+  // vr_msg.data = vrFilt; //For publish value testing
   
   //  Set a target(Manual)
   //    float vt_L = 5*(cos(currT_L/1.0e6)>0);
@@ -213,15 +213,16 @@ void loop() {
   if (vt_L == 0) motor_l.setSpeed(0);
   else{
     motor_l.setSpeed(pwr_L);
-    topicVL.publish(&vl_msg);
+    // topicVL.publish(&vl_msg); //For publish value testing
   }
   if (vt_R == 0) motor_r.setSpeed(0);
   else{
     motor_r.setSpeed(pwr_R);
-    topicVR.publish(&vr_msg);
-    eprev_L = e_L;
-    eprev_R = e_R;
+    // topicVR.publish(&vr_msg); //For publish value testing
   }
+
+  eprev_L = e_L;
+  eprev_R = e_R;
 
 
 
