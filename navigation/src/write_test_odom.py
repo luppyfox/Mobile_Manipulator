@@ -18,18 +18,25 @@ class Data_Test():
 
         self.rpmL = 8
         self.rpmR = 8
+<<<<<<< HEAD
         self.x = 0
         self.y = 0
         self.th = 0
         self.odom = Odometry()
         self.start_time = rospy.Time.now()
         self.rate = rospy.Rate(10)
+=======
+        self.odom = Odometry()
+        self.start_time = rospy.Time.now()
+        self.rate = rospy.Rate(50)
+>>>>>>> a649ccbb4f51eb6e5a3175b802ac0159ee50f151
 
         self.data_time = []
         self.data_x = []
         self.data_y = []
         self.data_th = []
         self.data_all = []
+<<<<<<< HEAD
     
     def to_positive_angle(self, th):
         while True:
@@ -42,12 +49,18 @@ class Data_Test():
         
 
     def callback(self, data):
+=======
+        
+
+    def callback(self, msg):
+>>>>>>> a649ccbb4f51eb6e5a3175b802ac0159ee50f151
         self.x = data.pose.pose.position.x
         self.y = data.pose.pose.position.y
         self.q1 = data.pose.pose.orientation.x
         self.q2 = data.pose.pose.orientation.y
         self.q3 = data.pose.pose.orientation.z
         self.q4 = data.pose.pose.orientation.w
+<<<<<<< HEAD
         self.q = (self.q1, self.q2, self.q3, self.q4)
         self.e = euler_from_quaternion(self.q)
         self.th = degrees(self.e[2])
@@ -57,6 +70,15 @@ class Data_Test():
         while not rospy.is_shutdown():
             if (self.x == 0):
                 rospy.loginfo("Can't recive odom value")
+=======
+        self.q = (q1, q2, q3, q4)
+        self.e = euler_from_quaternion(q)
+        self.th = degrees(e[2])
+        self.th = to_positive_angle(th)
+
+    def ploting(self):
+        while not rospy.is_shutdown():
+>>>>>>> a649ccbb4f51eb6e5a3175b802ac0159ee50f151
             if (self.x >= 1.0):
                 break
             self.left_wheel_pub.publish(self.rpmL)
@@ -66,7 +88,11 @@ class Data_Test():
             self.data_x.append(self.x)
             self.data_y.append(self.y)
             self.data_th.append(self.th)
+<<<<<<< HEAD
             self.data_all.append([(rospy.Time.now() - self.start_time).to_sec(), self.data_x, self.data_y, self.data_th])
+=======
+            self.data_all.append([(rospy.Time.now() - self.start_time).to_sec(), self.data_x, self.data.y, self.data_th])
+>>>>>>> a649ccbb4f51eb6e5a3175b802ac0159ee50f151
 
             self.rate.sleep()
 
@@ -77,7 +103,11 @@ class Data_Test():
         # plt.title('PID test')
         # plt.show()
 
+<<<<<<< HEAD
         pfi.write_csv(self.data_all, "/home/phat/catkin_ws/src/Mobile_Manipulator/navigation/csv/test_odom.csv")       
+=======
+        pfi.write_csv(self.data_all, "/home/phat/catkin_ws/src/Mobile_Manipulator/navigation/csv/test_pid.csv")       
+>>>>>>> a649ccbb4f51eb6e5a3175b802ac0159ee50f151
 
 
 if __name__ == '__main__':
