@@ -31,9 +31,9 @@ class OdometryClass:
             self.N = 20181 #total pulse per round
             self.x = 0
             self.y = 0
-            self.theta = 0
-            self.prev_yaw_data = 0
-            self.yaw_data = 0
+            self.theta = 0.0
+            self.prev_yaw_data = 0.0
+            self.yaw_data = 0.0
             self.updatePose()
 
     def callback_L(self, msg):
@@ -50,6 +50,9 @@ class OdometryClass:
         self.yaw_data = msg.data
         
     def updatePose(self):
+        rate_2 = rospy.Rate(0.5)
+        rate_2.sleep()
+        self.prev_yaw_data = self.yaw_data
         while not rospy.is_shutdown():
             delta_l = self.currentL_ticks - self.lastL_ticks
             delta_r = self.currentR_ticks - self.lastR_ticks
@@ -77,6 +80,7 @@ class OdometryClass:
             self.x += delta_x
             self.y += delta_y
             self.theta += delta_th
+            rospy.loginfo(self.theta)
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, (self.theta * pi / 180 ))
 

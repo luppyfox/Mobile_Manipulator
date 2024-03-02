@@ -70,6 +70,7 @@ class OdometryClass:
             self.theta += delta_th
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, self.theta)
+            rospy.loginfo(self.theta)
 
             self.odom_broadcaster.sendTransform((self.x, self.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
             odom = Odometry()
