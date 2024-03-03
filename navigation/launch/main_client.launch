@@ -4,9 +4,12 @@
   <!-- URDF and TF -->
   <!-- <include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/> -->
 
-    <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node" output="screen">
-        <!-- <param name="port" value="/dev/ttyUSB0"/> -->
+    <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node_1" output="screen">
         <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud" value="57600"/>
+    </node>
+    <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node_2" output="screen">
+        <param name="port" value="/dev/ttyUSB1"/>
         <param name="baud" value="57600"/>
     </node>
 
@@ -18,7 +21,7 @@
     <node name="odom_node" pkg="navigation" type="odom_with_imu.py" output="screen"/>
 
 
-    <include file="$(find navigation)/launch/laser_scan.launch"/>
+    <!-- <include file="$(find navigation)/launch/laser_scan.launch"/> -->
 
     <!--<node
     name="rviz"

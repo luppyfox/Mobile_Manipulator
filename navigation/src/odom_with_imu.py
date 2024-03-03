@@ -12,6 +12,7 @@ class OdometryClass:
             self.enc_l_sub = rospy.Subscriber('/Enc_L', Int64, self.callback_L)
             self.enc_r_sub = rospy.Subscriber('/Enc_R', Int64, self.callback_R)
             self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size = 1)
+            self.test_pub = rospy.Publisher('/test_odom', Float32, queue_size = 1)
 
             self.enc_r_sub = rospy.Subscriber('/yaw_imu', Float32, self.callback_yaw)
             
@@ -34,6 +35,7 @@ class OdometryClass:
             self.theta = 0.0
             self.prev_yaw_data = 0.0
             self.yaw_data = 0.0
+            self.dir_yaw = 0
             self.updatePose()
 
     def callback_L(self, msg):
@@ -49,10 +51,18 @@ class OdometryClass:
     def callback_yaw(self, msg):
         self.yaw_data = msg.data
         
+        
     def updatePose(self):
-        rate_2 = rospy.Rate(0.5)
+        prev_theta = 0.0
+        rate_2 = rospy.Rate(0.2)
         rate_2.sleep()
+        while (self.yaw_data == 0.0):
+            self.prev_yaw_data = self.yaw_data
         self.prev_yaw_data = self.yaw_data
+        if self.prev_yaw_data < 0:
+            self.dir_yaw = -1
+        else:
+            self.dir_yaw = 1
         while not rospy.is_shutdown():
             delta_l = self.currentL_ticks - self.lastL_ticks
             delta_r = self.currentR_ticks - self.lastR_ticks
@@ -66,8 +76,10 @@ class OdometryClass:
             dt = (self.current_time - self.last_time).to_sec()
             
             # th = (d_r - d_l) / (self.L)
-            th = (self.yaw_data - self.prev_yaw_data)
-            self.prev_yaw_data = self.yaw_data
+            # th = (self.yaw_data - self.prev_yaw_data)
+            # self.prev_yaw_data = self.yaw_data
+            th = self.theta - prev_theta
+            prev_theta = self.theta
 
             dc = (d_r + d_l) / 2
             v = dc / dt
@@ -79,8 +91,14 @@ class OdometryClass:
 
             self.x += delta_x
             self.y += delta_y
-            self.theta += delta_th
-            rospy.loginfo(self.theta)
+            # self.theta += delta_th
+            self.theta = (self.yaw_data + self.prev_yaw_data * self.dir_yaw)
+            rospy.loginfo("----------------------------")
+            rospy.loginfo("theta %s" , self.theta)
+            rospy.loginfo("current %s" , self.yaw_data)
+            rospy.loginfo("prev_yaw_data %s" , self.prev_yaw_data)
+            rospy.loginfo("----------------------------")
+            self.test_pub.publish(self.theta)
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, (self.theta * pi / 180 ))
 
