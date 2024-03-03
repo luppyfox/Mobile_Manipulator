@@ -2,7 +2,7 @@
 <launch>
 
   <!-- URDF and TF -->
-  <include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/>
+  <!-- <include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/> -->
 
     <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node" output="screen">
         <!-- <param name="port" value="/dev/ttyUSB0"/> -->
