@@ -51,18 +51,14 @@ class OdometryClass:
     def callback_yaw(self, msg):
         self.yaw_data = msg.data
         
-        
     def updatePose(self):
         prev_theta = 0.0
         rate_2 = rospy.Rate(0.2)
         rate_2.sleep()
         while (self.yaw_data == 0.0):
             self.prev_yaw_data = self.yaw_data
-        self.prev_yaw_data = self.yaw_data
-        if self.prev_yaw_data < 0:
-            self.dir_yaw = -1
-        else:
-            self.dir_yaw = 1
+        self.prev_yaw_data = self.yaw_data             
+      
         while not rospy.is_shutdown():
             delta_l = self.currentL_ticks - self.lastL_ticks
             delta_r = self.currentR_ticks - self.lastR_ticks
@@ -75,9 +71,6 @@ class OdometryClass:
             self.current_time = rospy.Time.now()
             dt = (self.current_time - self.last_time).to_sec()
             
-            # th = (d_r - d_l) / (self.L)
-            # th = (self.yaw_data - self.prev_yaw_data)
-            # self.prev_yaw_data = self.yaw_data
             th = self.theta - prev_theta
             prev_theta = self.theta
 
@@ -87,12 +80,15 @@ class OdometryClass:
 
             delta_x = dc * cos(self.theta)
             delta_y = dc * sin(self.theta)
-            delta_th = th
 
             self.x += delta_x
             self.y += delta_y
-            # self.theta += delta_th
-            self.theta = (self.yaw_data + self.prev_yaw_data * self.dir_yaw)
+
+            x_prime = -(-180 - (self.yaw_data))
+            y_prime = x_prime + 90
+            self.theta = self.yaw_data - self.prev_yaw_data
+            if (self.yaw_data > x_prime and self.yaw_data < 180) or self.theta > 180:
+                self.theta = (180 - (self.theta % 180) )*(-1)
             rospy.loginfo("----------------------------")
             rospy.loginfo("theta %s" , self.theta)
             rospy.loginfo("current %s" , self.yaw_data)

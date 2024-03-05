@@ -56,8 +56,9 @@ class Data_Test():
         self.th = data.data
 
     def ploting(self):
+        rospy.loginfo("Start")
         while not rospy.is_shutdown():
-            rospy.loginfo("Start")
+            
             # if (self.x == 0):
             #     rospy.loginfo("Can't recive odom value")
             # if (self.x >= 1.0):
