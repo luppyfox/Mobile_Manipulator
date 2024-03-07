@@ -8,7 +8,7 @@
     <rosparam file="$(find navigation)/config/global_costmap_params.yaml" command="load" />
 
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-    <rosparam file="$(find navigation)/config/base_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find navigation)/config/dwa_local_planner_params.yaml" command="load"/>
     
     <param name="base_global_planner" value="global_planner/GlobalPlanner" />
     <rosparam file="$(find navigation)/config/global_planner_params.yaml" command="load" />
