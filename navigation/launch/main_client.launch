@@ -8,10 +8,10 @@
         <param name="port" value="/dev/ttyACM0"/>
         <param name="baud" value="57600"/>
     </node>
-    <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node_2" output="screen">
+    <!-- <node pkg="rosserial_arduino" type="serial_node.py" name="serial_node_2" output="screen">
         <param name="port" value="/dev/ttyUSB0"/>
         <param name="baud" value="57600"/>
-    </node>
+    </node> -->
 
     <!--convert velocity-->
     <node name="convert_vel_node" pkg="navigation" type="convert_vel.py" output="screen"/>
@@ -21,7 +21,7 @@
     <node name="odom_node" pkg="navigation" type="odom_with_imu.py" output="screen"/>
 
 
-    <!-- <include file="$(find navigation)/launch/laser_scan.launch"/> -->
+    <include file="$(find navigation)/launch/laser_scan.launch"/>
 
     <!--<node
     name="rviz"
