@@ -62,7 +62,6 @@ class OdometryClass:
         return difference
         
     def updatePose(self):
-        prev_theta = 0.0
         rate_2 = rospy.Rate(0.2)
         rate_2.sleep()
         while (self.yaw_data == 0.0):
@@ -102,11 +101,11 @@ class OdometryClass:
             elif self.theta < -180:
                 self.theta += 360
             self.prev_yaw_data = self.yaw_data
-            # rospy.loginfo("----------------------------")
-            # rospy.loginfo("theta %s" , self.theta)
-            # rospy.loginfo("current %s" , self.yaw_data)
-            # rospy.loginfo("prev_yaw_data %s" , self.prev_yaw_data)
-            # rospy.loginfo("----------------------------")
+            rospy.loginfo("----------------------------")
+            rospy.loginfo("theta %s" , self.theta)
+            rospy.loginfo("current %s" , self.yaw_data)
+            rospy.loginfo("prev_yaw_data %s" , self.prev_yaw_data)
+            rospy.loginfo("----------------------------")
             self.test_pub.publish(self.theta)
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, (self.theta * pi / 180 ))
