@@ -12,9 +12,11 @@ class OdometryClass:
             self.enc_l_sub = rospy.Subscriber('/Enc_L', Int64, self.callback_L)
             self.enc_r_sub = rospy.Subscriber('/Enc_R', Int64, self.callback_R)
             self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size = 1)
-            self.test_pub = rospy.Publisher('/test_odom', Float32, queue_size = 1)
+            self.pub_x = rospy.Publisher('/odom_x', Float32, queue_size = 1)
+            self.pub_y = rospy.Publisher('/odom_y', Float32, queue_size = 1)
+            self.pub_yaw = rospy.Publisher('/odom_yaw', Float32, queue_size = 1)
 
-            self.enc_r_sub = rospy.Subscriber('/yaw_imu', Float32, self.callback_yaw)
+            self.yaw_imu_sub = rospy.Subscriber('/yaw_imu', Float32, self.callback_yaw)
             
             # self.th_pub = rospy.Publisher('/th', Float32, queue_size = 1) #For testing
             # self.th2_pub = rospy.Publisher('/th2', Float32, queue_size = 1) #For testing
@@ -106,7 +108,9 @@ class OdometryClass:
             rospy.loginfo("current %s" , self.yaw_data)
             rospy.loginfo("prev_yaw_data %s" , self.prev_yaw_data)
             rospy.loginfo("----------------------------")
-            self.test_pub.publish(self.theta)
+            self.pub_yaw.publish(self.theta)
+            self.pub_x.publish(self.x)
+            self.pub_y.publish(self.y)
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, (self.theta * pi / 180 ))
 

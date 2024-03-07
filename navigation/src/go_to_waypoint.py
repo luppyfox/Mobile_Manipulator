@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Int64
 import math
 
 class RobotController:
@@ -10,6 +10,9 @@ class RobotController:
         # Publishers for controlling wheel speeds
         self.right_wheel_pub = rospy.Publisher('/control_right_wheel/command', Float32, queue_size=1)
         self.left_wheel_pub = rospy.Publisher('/control_left_wheel/command', Float32, queue_size=1)
+        self.sub_x = rospy.Subscriber('/odom_x', Float32, self.callback_x)
+        self.sub_y = rospy.Subscriber('/odom_y', Float32, self.callback_y)
+        self.sub_yaw = rospy.Subscriber('/odom_yaw', Float32, self.callback_yaw)
 
         # Robot state
         self.x = 0.0
@@ -22,10 +25,19 @@ class RobotController:
         self.min_speed_rpm = 3.0
         self.max_speed_rpm = 5.0
 
-    def update_state(self, x, y, theta):
-        self.x = x
-        self.y = y
-        self.theta = theta
+    def callback_x(self, msg):
+        self.x = msg.data
+
+    def callback_y(self, msg):
+        self.y = msg.data
+    
+    def callback_yaw(self, msg):
+        self.theta = msg.data
+
+    # def update_state(self, x, y, theta):
+    #     self.x = x
+    #     self.y = y
+    #     self.theta = theta
 
     def rad_to_deg(self, rad):
         return rad * (180.0 / math.pi)
