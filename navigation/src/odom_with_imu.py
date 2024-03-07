@@ -50,6 +50,15 @@ class OdometryClass:
     
     def callback_yaw(self, msg):
         self.yaw_data = msg.data
+
+    def calculate_rotation(self, prev_angle, current_angle):
+    # Calculate the shortest rotation from prev_angle to current_angle
+        difference = current_angle - prev_angle
+        if difference > 180:
+            difference -= 360
+        elif difference < -180:
+            difference += 360
+        return difference
         
     def updatePose(self):
         prev_theta = 0.0
@@ -84,11 +93,9 @@ class OdometryClass:
             self.x += delta_x
             self.y += delta_y
 
-            x_prime = -(-180 - (self.yaw_data))
-            y_prime = x_prime + 90
-            self.theta = self.yaw_data - self.prev_yaw_data
-            if (self.yaw_data > x_prime and self.yaw_data < 180) or self.theta > 180:
-                self.theta = (180 - (self.theta % 180) )*(-1)
+            rotation = self.calculate_rotation(self.prev_yaw_data, self.yaw_data)
+            self.theta += rotation
+            self.prev_yaw_data = self.yaw_data
             rospy.loginfo("----------------------------")
             rospy.loginfo("theta %s" , self.theta)
             rospy.loginfo("current %s" , self.yaw_data)
