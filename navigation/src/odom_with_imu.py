@@ -96,6 +96,11 @@ class OdometryClass:
 
             rotation = self.calculate_rotation(self.prev_yaw_data, self.yaw_data)
             self.theta += rotation
+            # Normalize the adjusted angle to be within -180 to 180
+            if self.theta > 180:
+                self.theta -= 360
+            elif self.theta < -180:
+                self.theta += 360
             self.prev_yaw_data = self.yaw_data
             # rospy.loginfo("----------------------------")
             # rospy.loginfo("theta %s" , self.theta)
