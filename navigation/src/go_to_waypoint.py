@@ -92,36 +92,42 @@ class RobotController:
             # error_yaw = updated_yaw - self.theta
 
     def move_to_point(self, target_x, target_y):
-        prev_dist = 0
         error_x = target_x - self.x
         error_y = target_y - self.y
         target_yaw = self.rad_to_deg(math.atan2(error_y, error_x))
-        
+
         # First, rotate to align with the target direction
         self.rotate_to_yaw(target_yaw)
 
         # Then move towards the target point
         distance = math.sqrt(error_x**2 + error_y**2)
-        while distance > self.tolerance_linear:
+        prev_error_x = error_x
+        prev_error_y = error_y
 
+        while distance > self.tolerance_linear:
             error_x = target_x - self.x
             error_y = target_y - self.y
             distance = math.sqrt(error_x**2 + error_y**2)
             
+            # Determine if the robot has passed the target by checking the sign change of the errors
+            passed_target = (error_x * prev_error_x < 0) or (error_y * prev_error_y < 0)
+
             speed = max(min(distance, self.max_speed_rpm), self.min_speed_rpm)
 
-            # Move forward
-            if (error_x > 0) and (self.waypoints[0] or self.waypoints[1] or self.waypoints[2] ):
+            # Adjust movement direction based on the current position relative to the target
+            if not passed_target:
                 self.right_wheel_pub.publish(Float32(speed))
                 self.left_wheel_pub.publish(Float32(speed))
-            # Move backward
-            elif error_x < 0:
-                self.right_wheel_pub.publish(Float32(speed))
-                self.left_wheel_pub.publish(Float32(speed))
-            prev_dist = distance
-            rospy.loginfo("    distance is: %s" , distance)
-            rospy.loginfo("    right is: %s" , speed)
-            rospy.loginfo("    left is: %s" , speed)
+            else:
+                # Reverse the movement if the robot has passed the target
+                self.right_wheel_pub.publish(Float32(-speed))
+                self.left_wheel_pub.publish(Float32(-speed))
+
+            prev_error_x = error_x
+            prev_error_y = error_y
+            rospy.loginfo("    distance is: %s", distance)
+            rospy.loginfo("    right is: %s", speed)
+            rospy.loginfo("    left is: %s", speed)
             self.ros_shutdown()
             rospy.sleep(0.00001) # Wait a bit between movements
             # self.rate.sleep()
