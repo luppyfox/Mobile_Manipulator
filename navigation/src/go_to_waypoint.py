@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from std_msgs.msg import Float32, Int64
 import math
@@ -22,8 +22,13 @@ class RobotController:
         # Movement parameters
         self.tolerance_linear = 0.01 # meters
         self.tolerance_angle = 2 # degrees
-        self.min_speed_rpm = 3.0
+        self.min_speed_rpm = 2.0
         self.max_speed_rpm = 5.0
+
+        self.point = []
+        self.waypoints = []
+
+        self.rate = rospy.Rate(200)
 
     def callback_x(self, msg):
         self.x = msg.data
@@ -38,6 +43,11 @@ class RobotController:
     #     self.x = x
     #     self.y = y
     #     self.theta = theta
+        
+    def ros_shutdown(self):
+        if rospy.is_shutdown():
+            rospy.signal_shutdown("Terminate")
+            exit()
 
     def rad_to_deg(self, rad):
         return rad * (180.0 / math.pi)
@@ -46,8 +56,21 @@ class RobotController:
         return deg * (math.pi / 180.0)
 
     def rotate_to_yaw(self, target_yaw):
+        
         error_yaw = target_yaw - self.theta
+        if error_yaw > 180:
+            error_yaw -= 360
+        elif error_yaw < -180:
+            error_yaw += 360
+
         while abs(error_yaw) > self.tolerance_angle:
+
+            error_yaw = target_yaw - self.theta
+            if error_yaw > 180:
+                error_yaw -= 360
+            elif error_yaw < -180:
+                error_yaw += 360
+        
             speed = max(min(abs(error_yaw), self.max_speed_rpm), self.min_speed_rpm)
             if error_yaw > 0:
                 # Rotate clockwise
@@ -57,12 +80,19 @@ class RobotController:
                 # Rotate counter-clockwise
                 self.right_wheel_pub.publish(Float32(speed))
                 self.left_wheel_pub.publish(Float32(-speed))
+            rospy.loginfo("    error_yaw is: %s" , error_yaw)
+            rospy.loginfo("    right is: %s" , speed)
+            rospy.loginfo("    left is: %s" , speed)
+            self.ros_shutdown()
+            rospy.sleep(0.00001) # Wait a bit between movements
+            # self.rate.sleep()
             
             # Update your robot's current yaw here, and recalculate error_yaw
             # This is just a placeholder for demonstration
             # error_yaw = updated_yaw - self.theta
 
     def move_to_point(self, target_x, target_y):
+        prev_dist = 0
         error_x = target_x - self.x
         error_y = target_y - self.y
         target_yaw = self.rad_to_deg(math.atan2(error_y, error_x))
@@ -73,26 +103,51 @@ class RobotController:
         # Then move towards the target point
         distance = math.sqrt(error_x**2 + error_y**2)
         while distance > self.tolerance_linear:
-            speed = max(min(distance, self.max_speed_rpm), self.min_speed_rpm)
-            # Move forward
-            self.right_wheel_pub.publish(Float32(speed))
-            self.left_wheel_pub.publish(Float32(speed))
+
+            error_x = target_x - self.x
+            error_y = target_y - self.y
+            distance = math.sqrt(error_x**2 + error_y**2)
             
+            speed = max(min(distance, self.max_speed_rpm), self.min_speed_rpm)
+
+            # Move forward
+            if (error_x > 0) and (self.waypoints[0] or self.waypoints[1] or self.waypoints[2] ):
+                self.right_wheel_pub.publish(Float32(speed))
+                self.left_wheel_pub.publish(Float32(speed))
+            # Move backward
+            elif error_x < 0:
+                self.right_wheel_pub.publish(Float32(speed))
+                self.left_wheel_pub.publish(Float32(speed))
+            prev_dist = distance
+            rospy.loginfo("    distance is: %s" , distance)
+            rospy.loginfo("    right is: %s" , speed)
+            rospy.loginfo("    left is: %s" , speed)
+            self.ros_shutdown()
+            rospy.sleep(0.00001) # Wait a bit between movements
+            # self.rate.sleep()
             # Update your robot's current position here, and recalculate distance
             # This is just a placeholder for demonstration
             # distance = math.sqrt((target_x - self.x)**2 + (target_y - self.y)**2)
 
     def run(self, waypoints):
-        for point in waypoints:
-            self.move_to_point(point[0], point[1])
-            self.rotate_to_yaw(point[2])
+        self.waypoints = waypoints
+        for self.point in self.waypoints:
+            rospy.loginfo("=====================================")
+            rospy.loginfo("Move forward")
+            rospy.loginfo("    Goal is: %s" , self.point)
+            self.move_to_point(self.point[0], self.point[1])
+            rospy.loginfo("=====================================")
+            rospy.loginfo("Rotate")
+            rospy.loginfo("    Goal is: %s" , self.point)
+            self.rotate_to_yaw(self.point[2])
             rospy.sleep(1) # Wait a bit between movements
+            rospy.loginfo("=====================================")
 
 if __name__ == '__main__':
     controller = RobotController()
     waypoints = [
-        [1.0341, 0, 62.253],
-        [1.4735, -1.4903, 27.9916],
+        [1.0341, 0, -62.2538],
+        [1.4735, -1.4903, -57.9916],
         [1.8948, -1.3096, 84.7814],
         [1.9737, -0.3926, 90]
     ]
