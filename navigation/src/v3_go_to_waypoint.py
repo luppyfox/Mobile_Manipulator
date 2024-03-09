@@ -14,13 +14,15 @@ class RobotController:
         self.pose_yaw_subscriber = rospy.Subscriber('/odom_yaw', Float32, self.update_pose_theta)
 
         self.max_speed = 3.0  # Maximum speed
-        self.min_speed = 1.5  # Minimum speed
+        self.min_speed = 2.0  # Minimum speed
 
         self.tolerance_distance = 0.05  # Tolerance for reaching a point (meters)
         self.tolerance_orientation = math.radians(2)  # Tolerance for orientation (radians)
 
         self.navigation_points = [[1.0341, 0, -62.253], [1.4735, -1.4903, -57.9916], 
                                   [1.8948, -1.3096, 84.7814], [1.9737, -0.3926, 90]]
+        
+        self.rate = rospy.Rate(170)
     
     def update_pose_x(self, msg):
         self.pose_x = msg.data
@@ -56,7 +58,8 @@ class RobotController:
             rospy.loginfo("    right is: %s", right_speed)
             rospy.loginfo("    left is: %s", left_speed)
 
-            rospy.sleep(0.1)  # Control loop frequency
+            # rospy.sleep(0.1)  # Control loop frequency
+            self.rate.sleep()
 
     def align_to_yaw(self, target_yaw_deg):
         rospy.loginfo(f"Aligning to yaw: {target_yaw_deg} degrees")
@@ -75,7 +78,8 @@ class RobotController:
             rospy.loginfo("    right is: %s", wheel_speeds[0])
             rospy.loginfo("    left is: %s", wheel_speeds[1])
 
-            rospy.sleep(0.1)  # Control loop frequency
+            # rospy.sleep(0.1)  # Control loop frequency
+            self.rate.sleep()
 
     def calculate_speed(self, distance):
         # Linear speed adjustment based on the distance to the target point
