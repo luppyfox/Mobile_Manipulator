@@ -26,9 +26,10 @@ class RobotController:
         self.points = [[1.0341, 0, -62.253], [1.4735, -1.4903, -57.9916], 
                        [1.8948, -1.3096, 84.7814], [1.9737, -0.3926, 90]]
         
-        self.prev_angle = 0.0
+        self.point_angle = 0.0
+        self.count_angle = 0
         
-        self.rate = rospy.Rate(160)
+        # self.rate = rospy.Rate(160)
         
     def callback_x(self, msg):
         self.x = msg.data
@@ -57,13 +58,21 @@ class RobotController:
 
             # Calculate desired speed based on distance
             speed = max(self.min_speed, min(self.max_speed, distance))
-            angle_to_target = math.atan2(dy, dx)
+
+            # angle_to_target = math.atan2(dy, dx)
             # angle_diff = angle_to_target - self.rad_to_deg(self.theta)
-            angle_diff = self.rad_to_deg(self.prev_angle) - self.rad_to_deg(self.theta)
-            if angle_diff > (math.pi*2):
-                angle_diff -= (math.pi*2)
-            elif angle_diff < -(math.pi):
-                angle_diff += (math.pi*2)
+            # if angle_diff > (math.pi):
+            #     angle_diff -= (math.pi*2)
+            # elif angle_diff < -(math.pi):
+            #     angle_diff += (math.pi*2)
+            if (self.count_angle == 0): self.point_angle = 0
+            else: self.point_angle = self.points[self.count_angle-1][2]
+            angle_diff = self.point_angle - self.theta
+            if angle_diff > 180:
+                angle_diff -= 360
+            elif angle_diff < -180:
+                angle_diff += 360
+            angle_diff = self.rad_to_deg(angle_diff)
 
             # Determine wheel speeds required to move towards target
             right_speed, left_speed = self.calculate_wheel_speeds(speed, angle_diff)
@@ -73,8 +82,8 @@ class RobotController:
             rospy.loginfo("    distance is: %s", distance)
             rospy.loginfo("    right is: %s", right_speed)
             rospy.loginfo("    left is: %s", left_speed)
-            # rospy.sleep(0.1)  # Update frequency
-            self.rate.sleep()
+            rospy.sleep(0.1)  # Update frequency
+            # self.rate.sleep()
         rospy.loginfo("----------------------------------------------------------------")
 
     def align_to_yaw(self, target_yaw):
@@ -100,8 +109,8 @@ class RobotController:
             rospy.loginfo("    Error yaw is: %s", yaw_diff)
             # rospy.loginfo("    right is: %s", right_speed)
             # rospy.loginfo("    left is: %s", left_speed)
-            # rospy.sleep(0.1)  # Update frequency
-            self.rate.sleep()
+            rospy.sleep(0.1)  # Update frequency
+            # self.rate.sleep()
         rospy.loginfo("----------------------------------------------------------------")
 
     def calculate_wheel_speeds(self, speed, angle_diff):
@@ -119,7 +128,7 @@ class RobotController:
             self.move_to_point(point)
             rospy.loginfo("=====================================")
             rospy.loginfo("Rotation")
-            self.prev_angle = point[2]
+            self.count_angle += 1
             self.align_to_yaw(point[2])  # Convert degrees to radians
 
 if __name__ == "__main__":
