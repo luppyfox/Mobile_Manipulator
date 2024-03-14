@@ -5,7 +5,7 @@ import math
 
 class RobotController:
     def __init__(self):
-        rospy.init_node('robot_controller', anonymous=True)
+        rospy.init_node('robot_controller')#, anonymous=True)
         self.pose_x, self.pose_y, self.pose_theta = 0.0, 0.0, 0.0  # Robot's current position (x, y) and orientation (theta in radians)
         self.right_wheel_publisher = rospy.Publisher('/control_right_wheel/command', Float32, queue_size=1)
         self.left_wheel_publisher = rospy.Publisher('/control_left_wheel/command', Float32, queue_size=1)
