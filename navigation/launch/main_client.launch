@@ -18,7 +18,8 @@
 
     <!--Odom-->
     <!-- <node name="odom_node" pkg="navigation" type="odom.py" output="screen"/> -->
-    <node name="odom_node" pkg="navigation" type="odom_with_imu.py" output="screen"/>
+    <!-- <node name="odom_node" pkg="navigation" type="odom_with_imu.py" output="screen"/> -->
+    <node name="odom_node" pkg="navigation" type="odom_with_laser.py" output="screen"/>
 
     <include file="$(find navigation)/launch/laser_scan.launch"/>
 
