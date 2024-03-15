@@ -17,7 +17,7 @@ class Diff_drive_kinematics():
         self.vr = Float32()
         self.rpmL = Float32()
         self.rpmR = Float32()
-        self.rate = rospy.Rate(1)
+        self.rate = rospy.Rate(10)
 
     def callback(self, msg):
         self.cmd_vel = msg

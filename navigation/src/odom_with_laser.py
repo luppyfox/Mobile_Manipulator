@@ -17,6 +17,7 @@ class OdomPublisher:
 
         self.last_pose = Pose2D()
         self.last_time = rospy.Time.now()
+        self.rate = rospy.Rate(200)
 
     def pose_callback(self, data):
         if not rospy.is_shutdown():
@@ -65,6 +66,7 @@ class OdomPublisher:
             # Update last pose and time
             self.last_pose = data
             self.last_time = current_time
+            self.rate.sleep()
         else:
             rospy.signal_shutdown("Terminate")
             exit()
