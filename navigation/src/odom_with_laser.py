@@ -4,6 +4,7 @@ from geometry_msgs.msg import Pose2D
 from nav_msgs.msg import Odometry
 import tf
 from tf.transformations import quaternion_from_euler
+from tf.broadcaster import TransformBroadcaster
 
 class OdomPublisher:
     def __init__(self):
@@ -40,7 +41,7 @@ class OdomPublisher:
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
             self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
             odom_msg = Odometry()
-            odom_msg.header.stamp = current_time
+            odom_msg.header.stamp = self.current_time
             odom_msg.header.frame_id = "odom"
             odom_msg.child_frame_id = "base_footprint"
 
@@ -70,7 +71,7 @@ class OdomPublisher:
 
             # Update last pose and time
             self.last_pose = data
-            self.last_time = current_time
+            self.last_time = self.current_time
             self.rate.sleep()
         else:
             rospy.signal_shutdown("Terminate")
