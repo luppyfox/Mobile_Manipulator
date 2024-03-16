@@ -15,14 +15,17 @@ class OdomPublisher:
         # Publisher to odom
         self.odom_pub = rospy.Publisher('odom', Odometry, queue_size=50)
 
+        self.odom_broadcaster = TransformBroadcaster()
+
         self.last_pose = Pose2D()
+        self.current_time = rospy.Time.now()
         self.last_time = rospy.Time.now()
         self.rate = rospy.Rate(200)
 
     def pose_callback(self, data):
         if not rospy.is_shutdown():
-            current_time = rospy.Time.now()
-            dt = (current_time - self.last_time).to_sec()
+            self.current_time = rospy.Time.now()
+            dt = (self.current_time - self.last_time).to_sec()
             
             # Calculate linear speed
             dx = data.x - self.last_pose.x
@@ -34,10 +37,12 @@ class OdomPublisher:
             angular_speed = dtheta / dt
             
             # Prepare odometry message
+            odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
+            self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
             odom_msg = Odometry()
             odom_msg.header.stamp = current_time
             odom_msg.header.frame_id = "odom"
-            odom_msg.child_frame_id = "base_link"
+            odom_msg.child_frame_id = "base_footprint"
 
             # Set the position
             odom_msg.pose.pose.position.x = data.x
