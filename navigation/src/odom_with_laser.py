@@ -21,7 +21,7 @@ class OdomPublisher:
         self.last_pose = Pose2D()
         self.current_time = rospy.Time.now()
         self.last_time = rospy.Time.now()
-        self.rate = rospy.Rate(200)
+        self.rate = rospy.Rate(0.5)
 
     def pose_callback(self, data):
         if not rospy.is_shutdown():
@@ -38,8 +38,8 @@ class OdomPublisher:
             angular_speed = dtheta / dt
             
             # Prepare odometry message
-            odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
-            self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
+            # odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
+            # self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
             odom_msg = Odometry()
             odom_msg.header.stamp = self.current_time
             odom_msg.header.frame_id = "odom"
@@ -72,7 +72,7 @@ class OdomPublisher:
             # Update last pose and time
             self.last_pose = data
             self.last_time = self.current_time
-            # self.rate.sleep()
+            self.rate.sleep()
         else:
             rospy.signal_shutdown("Terminate")
             exit()
