@@ -15,8 +15,8 @@ DWAPlannerROS:
   acc_lim_y: 2.5
 
 # Goal Tolerance Parameters
-  xy_goal_tolerance: 0.1
-  yaw_goal_tolerance: 1.57
+  xy_goal_tolerance: 0.05
+  yaw_goal_tolerance: 0.15
 
 # Differential-drive robot configuration
   holonomic_robot: false

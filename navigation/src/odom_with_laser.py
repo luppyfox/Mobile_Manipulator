@@ -38,8 +38,8 @@ class OdomPublisher:
             angular_speed = dtheta / dt
             
             # Prepare odometry message
-            odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
-            self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
+            # odom_quat = tf.transformations.quaternion_from_euler(0, 0, data.theta)
+            # self.odom_broadcaster.sendTransform((data.x, data.y, 0), odom_quat, self.current_time, "base_footprint", "odom")
             odom_msg = Odometry()
             odom_msg.header.stamp = self.current_time
             odom_msg.header.frame_id = "odom"
