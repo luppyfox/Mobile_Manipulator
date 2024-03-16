@@ -72,7 +72,7 @@ class OdomPublisher:
             # Update last pose and time
             self.last_pose = data
             self.last_time = self.current_time
-            self.rate.sleep()
+            # self.rate.sleep()
         else:
             rospy.signal_shutdown("Terminate")
             exit()
