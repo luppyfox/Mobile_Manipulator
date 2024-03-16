@@ -1,8 +1,8 @@
 # BaseGlobalPlanner:
 GlobalPlanner:                              # Also see: http://wiki.ros.org/global_planner
   use_grid_path: true
-  use_dijkstra: False
-  use_quadratic: False
+  use_dijkstra: false
+  use_quadratic: false
   orientation_mode: 1
 
   # old_navfn_behavior: false                     # Exactly mirror behavior of navfn, use defaults for other boolean parameters, default false
