@@ -139,14 +139,20 @@ ros::Publisher EncR("Enc_R", &encR_msg); // Publish encoder of right wheel
 //callback
 void CallBack_L(const std_msgs::Float32& vel_l) {
   vt_L = vel_l.data * -1;
-  if (vt_L >= 7){
-    vt_L = 7;
+  if (vt_L >= 12){
+    vt_L = 12;
+  }
+  else if (vt_L <= -12){
+    vt_L = -12;
   }
 }
 void CallBack_R(const std_msgs::Float32& vel_r) {
   vt_R = vel_r.data * -1;
-  if (vt_R >= 7){
-    vt_R = 7;
+  if (vt_R >= 12){
+    vt_R = 12;
+  }
+  else if (vt_R <= -12){
+    vt_R = -12;
   }
 }
 
