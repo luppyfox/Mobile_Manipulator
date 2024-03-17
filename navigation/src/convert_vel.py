@@ -37,17 +37,17 @@ class Diff_drive_kinematics():
         self.rpmL = (self.vl*60)/(2*pi*R)
         self.rpmR = (self.vr*60)/(2*pi*R)
 
-        if self.rpmL >= 8:
-            self.rpmL = 8
+        if self.rpmL >= 12:
+            self.rpmL = 12
 
-        if self.rpmR >= 8:
-            self.rpmR = 8
+        if self.rpmR >= 12:
+            self.rpmR = 12
 
-        if self.rpmL <= -8:
-            self.rpmL = -8
+        if self.rpmL <= -12:
+            self.rpmL = -12
 
-        if self.rpmR <= -8:
-            self.rpmR = -8
+        if self.rpmR <= -12:
+            self.rpmR = -12
 
 
 if __name__ == '__main__':

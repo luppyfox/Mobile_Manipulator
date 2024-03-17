@@ -1,12 +1,12 @@
 DWAPlannerROS:
 # Robot Configuration Parameters
-  max_vel_x: 0.035 #0.45
+  max_vel_x: 0.07 #0.45
   min_vel_x: -0.035 #0.1
 
-  max_vel_theta: 0.07 #1.0
+  max_vel_theta: 0.14 #1.0
   min_vel_theta: 0.035 #0.4
   
-  max_vel_trans:  0.07
+  max_vel_trans:  0.14
   min_vel_trans:  0.035
   min_in_place_vel_theta: 0.4
 
@@ -16,7 +16,7 @@ DWAPlannerROS:
 
 # Goal Tolerance Parameters
   xy_goal_tolerance: 0.05
-  yaw_goal_tolerance: 0.15
+  yaw_goal_tolerance: 0.0349066 #0.15
 
 # Differential-drive robot configuration
   holonomic_robot: false
@@ -28,7 +28,7 @@ DWAPlannerROS:
   sim_granularity: 0.05
 
 # Trajectory Scoring Parameters
-  path_distance_bias: 32.0      # 32.0   - weighting for how much it should stick to the global path plan
+  path_distance_bias: 60.0      # 32.0   - weighting for how much it should stick to the global path plan
   goal_distance_bias: 24
   stop_time_buffer: 0.2
 
