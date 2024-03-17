@@ -4,6 +4,7 @@ import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import Quaternion, Pose2D
 from tf.transformations import quaternion_from_euler
+from math import pi
 
 class MoveBaseSeq:
     def __init__(self):
@@ -47,11 +48,11 @@ if __name__ == '__main__':
     try:
         mover = MoveBaseSeq()
         # Send the first goal
-        mover.send_goal(1, 0, 0)
+        mover.send_goal(2, -1.35, 0)
         mover.pose_callback()
         rospy.loginfo("First goal completed")
         # Send the second goal
-        mover.send_goal(2, 1, 0)
+        # mover.send_goal(2, 1, 0)
         mover.pose_callback()
         rospy.loginfo("Second goal completed")
     except rospy.ROSInterruptException:
