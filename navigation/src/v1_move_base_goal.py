@@ -52,8 +52,16 @@ if __name__ == '__main__':
         mover.pose_callback()
         rospy.loginfo("First goal completed")
         # Send the second goal
-        # mover.send_goal(2, 1, 0)
+        mover.send_goal(2, -2.15, 1.57)
         mover.pose_callback()
         rospy.loginfo("Second goal completed")
+        # Send the third goal
+        mover.send_goal(10, -2.9, 3.1415)
+        mover.pose_callback()
+        rospy.loginfo("third goal completed")
+        # Send the second goal
+        mover.send_goal(0, 0, 0)
+        mover.pose_callback()
+        rospy.loginfo("zero goal completed")
     except rospy.ROSInterruptException:
         pass
