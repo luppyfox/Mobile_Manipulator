@@ -5,7 +5,7 @@
   <include file="$(find nav_tf_urdf2)/launch/state_publisher.launch"/>
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find navigation)/map/map8.yaml"/>
+  <arg name="map_file" default="$(find navigation)/map/map11.yaml"/>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />

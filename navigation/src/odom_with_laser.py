@@ -63,11 +63,11 @@ class OdomPublisher:
 
             # Publish the message
             self.odom_pub.publish(odom_msg)
-            rospy.loginfo("----------------------------")
-            rospy.loginfo("x     : %s" , data.x)
-            rospy.loginfo("y     : %s" , data.y)
-            rospy.loginfo("theta : %s" , data.theta)
-            rospy.loginfo("----------------------------")
+            # rospy.loginfo("----------------------------")
+            # rospy.loginfo("x     : %s" , data.x)
+            # rospy.loginfo("y     : %s" , data.y)
+            # rospy.loginfo("theta : %s" , data.theta)
+            # rospy.loginfo("----------------------------")
 
             # Update last pose and time
             self.last_pose = data
